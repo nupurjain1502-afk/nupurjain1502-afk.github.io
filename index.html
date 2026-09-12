@@ -20,11 +20,13 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--black);font-family:'Cormorant Garamond',serif;font-weight:400;cursor:none;overflow-x:hidden;}
 /* ── CURSOR ── */
-#cur{position:fixed;width:16px;height:16px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity .2s,background-color .2s;
+#cur{position:fixed;width:20px;height:20px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity .2s,background-color .2s,width .2s,height .2s;
 background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M15 2 L17.5 11.5 L27 12 L18.5 17 L21 27 L15 20.5 L9 27 L11.5 17 L3 12 L12.5 11.5 Z" fill="%23000000" stroke="%23000000" stroke-width="1" stroke-linejoin="round"/></svg>');
-background-size:16px 16px;background-repeat:no-repeat;background-position:center;border-radius:50%;}
-#cur.big{background-color:rgba(139,58,42,.18);width:34px;height:34px;}
-#cur.onname{background-color:rgba(139,58,42,.18);width:34px;height:34px;}
+background-size:20px 20px;background-repeat:no-repeat;background-position:center;border-radius:50%;}
+#cur.big{background-color:rgba(139,58,42,.18);width:38px;height:38px;}
+#cur.onname{background-color:rgba(139,58,42,.18);width:38px;height:38px;}
+/* Cursor fail-safe + touch handling is done in JS: fades out if mouse stops moving,
+   and is fully disabled on touch devices (see JS block + media query below). */
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;transition:background .3s,box-shadow .3s;}
 nav.scrolled{background:var(--bg);box-shadow:0 1px 0 var(--lgrey);}
@@ -190,14 +192,14 @@ background:var(--lgrey);
 .about-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:.92;text-transform:uppercase;margin-bottom:.8rem;letter-spacing:-.01em;}
 .about-h em{font-style:normal;color:var(--acc);}
 .about-intro{font-family:'Mansalva',cursive;font-size:1.05rem;color:var(--black);margin-bottom:1.1rem;line-height:1.6;}
-.about-body{font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:1.85;color:#585858;max-width:460px;}
+.about-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:#585858;max-width:460px;}
 .about-body p+p{margin-top:.85rem;}
 .about-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .55s cubic-bezier(.16,1,.3,1),opacity .45s ease;margin-top:0;}
 .about-more>*{overflow:hidden;min-height:0;}
 .about-more.open{grid-template-rows:1fr;opacity:1;margin-top:.85rem;}
 .about-more.open>p{overflow:visible;}
-.about-more-btn{margin:0 0 .35rem;font-family:'Mansalva',cursive;font-size:.85rem;color:var(--acc);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.35rem;padding:0;order:-1;}
-.about-hook{font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:1.85;color:#3a3a3a;margin-bottom:.35rem;}
+.about-more-btn{margin:0 0 .35rem;font-family:'Mansalva',cursive;font-size:1rem;color:var(--acc);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.35rem;padding:.3rem 0;order:-1;}
+.about-hook{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:#3a3a3a;margin-bottom:.35rem;}
 .about-more-btn:hover{opacity:.7;}
 .about-more-btn #about-more-arr{transition:transform .3s ease;display:inline-block;}
 .about-more-btn.open #about-more-arr{transform:rotate(180deg);}
@@ -269,7 +271,6 @@ transition:opacity .3s;
 .pe-scroll-hint{display:flex;align-items:center;gap:.4rem;font-family:'Mansalva',cursive;font-size:.72rem;color:var(--acc);}
 .pe-scroll-hint svg{width:13px;height:13px;animation:nudgeRight 1.4s ease-in-out infinite;}
 @keyframes nudgeRight{0%,100%{transform:translateX(0);}50%{transform:translateX(4px);}}
-/* CANVAS */
 /* ── MIND MAP (Selected Works) ── */
 .mindmap{position:relative;width:999px;height:960px;max-width:100%;margin:.2rem auto 0;}
 .mindmap-scale{width:100%;overflow-x:auto;}
@@ -319,12 +320,16 @@ svg.connectors{display:none;}
 .m-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.3rem,3vw,1.9rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;}
 .m-lbl{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.85rem;color:rgba(242,240,235,.6);margin-top:.25rem;}
 .m-header-meta{text-align:right;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;color:rgba(242,240,235,.75);white-space:nowrap;}
-.mclose{flex:0 0 auto;font-family:'Mansalva',cursive;font-size:.85rem;color:rgba(242,240,235,.7);cursor:none;background:none;border:none;z-index:2;white-space:nowrap;}
+.mclose{flex:0 0 auto;font-family:'Mansalva',cursive;font-size:1.05rem;color:rgba(242,240,235,.75);cursor:none;background:none;border:none;z-index:2;white-space:nowrap;padding:.55rem .8rem;display:flex;align-items:center;gap:.35rem;}
 .mclose:hover{color:var(--bg);}
 .m-body-wrap{padding:2.8rem 3rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
 .m-sub{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.88rem;color:var(--acc);margin-bottom:1.1rem;display:block;}
-.m-body{font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:1.85;color:#3a3a3a;white-space:pre-line;}
-.m-note{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;line-height:1.7;color:var(--grey);margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--lgrey);}
+.m-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.9;color:#3a3a3a;}
+.m-body p{margin-bottom:1.15rem;}
+.m-body p:last-child{margin-bottom:0;}
+.m-body strong{font-family:'Poppins',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);display:block;margin-bottom:.35rem;}
+.m-body em{font-style:normal;font-family:'Cormorant Garamond',serif;color:#3a3a3a;}
+.m-note{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.9rem;line-height:1.75;color:var(--grey);margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--lgrey);}
 .m-note a{color:var(--acc);text-decoration:underline;}
 .m-imgs{display:flex;flex-direction:column;gap:.6rem;}
 .m-hero{display:block;cursor:zoom-in;position:relative;}
@@ -349,7 +354,8 @@ svg.connectors{display:none;}
 .lbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
 .lbox.open{opacity:1;pointer-events:all;}
 .lbox img{max-width:90vw;max-height:90vh;object-fit:contain;display:block;}
-.lbox-close{position:absolute;top:1.2rem;right:1.2rem;color:rgba(255,255,255,.7);font-family:'Mansalva',cursive;font-size:1rem;cursor:pointer;background:none;border:none;}
+.lbox-close{position:absolute;top:1.2rem;right:1.2rem;color:rgba(255,255,255,.75);font-family:'Mansalva',cursive;font-size:1.05rem;cursor:pointer;background:none;border:none;padding:.55rem .8rem;}
+.lbox-close:hover{color:#fff;}
 .lbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.25);width:46px;height:46px;border-radius:50%;font-size:1.6rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s;}
 .lbox-nav:hover{background:rgba(255,255,255,.2);}
 .lbox-nav:disabled{opacity:0;pointer-events:none;}
@@ -363,11 +369,14 @@ svg.connectors{display:none;}
 }
 /* ARCHIVE */
 #archive{padding:3rem 3rem 4.5rem;border-top:1px solid var(--lgrey);}
-.archive-toggle{display:flex;align-items:center;gap:.8rem;cursor:none;}
+.archive-toggle{display:flex;align-items:center;gap:.9rem;cursor:none;padding:.3rem 0;}
 .archive-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.5vw,3rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--black);transition:color .2s;}
 .archive-toggle:hover .archive-h{color:var(--acc);}
-.arc-arrow{font-size:1rem;color:var(--grey);transition:transform .3s;}
+.arc-arrow-wrap{display:flex;flex-direction:column;align-items:center;}
+.arc-arrow{font-size:1.7rem;color:var(--acc);transition:transform .3s;line-height:1;}
 .arc-arrow.open{transform:rotate(90deg);}
+.arc-hint{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.88rem;color:var(--grey);margin-top:.5rem;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--lgrey);cursor:none;}
+.archive-toggle:hover ~ .arc-hint,.arc-hint:hover{color:var(--acc);text-decoration-color:var(--acc);}
 .arc-inner{display:none;margin-top:1.5rem;}
 .arc-inner.open{display:block;}
 .arc-subtext{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.85rem;color:var(--grey);margin-bottom:2rem;max-width:520px;}
@@ -506,7 +515,7 @@ animation:imgIn .55s cubic-bezier(.16,1,.3,1) both;
 @media (hover:none),(pointer:coarse){
 body{cursor:auto;}
 #cur,#curlabel{display:none!important;}
-.hero-name,.tag,.vbtn,.prow,.card,.archive-toggle{cursor:auto;}
+.hero-name,.tag,.vbtn,.prow,.card,.archive-toggle,.mclose,.lbox-close,.arc-hint{cursor:auto;}
 }
 /* ── REDUCED MOTION ── */
 @media (prefers-reduced-motion:reduce){
@@ -701,8 +710,9 @@ body{cursor:auto;}
 <section id="archive">
 <div class="archive-toggle reveal" onclick="toggleArchive()">
 <h3 class="archive-h">&amp; other things</h3>
-<span class="arc-arrow" id="arc-arr">›</span>
+<div class="arc-arrow-wrap"><span class="arc-arrow" id="arc-arr">›</span></div>
 </div>
+<p class="arc-hint" onclick="toggleArchive()">click to expand</p>
 <div class="arc-inner" id="arc-inner">
 <p class="arc-subtext">A collection of exploratory works and passion projects shaping the foundations of my creative process and tracing my interest in materiality.</p>
 
@@ -777,32 +787,51 @@ body{cursor:auto;}
 </footer>
 
 <script>
-// Cursor
+// ── Cursor ──
+// Bigger custom cursor. Fails safe: fades out if the mouse stops sending move
+// events (window loses focus, mouse dragged out of viewport, etc) instead of
+// leaving a frozen dot on screen. Fully disabled on touch devices (see CSS
+// media query above too — this JS check just also skips binding listeners).
 const cur=document.getElementById('cur');
 const curLabel=document.getElementById('curlabel');
-document.addEventListener('mousemove',e=>{
-cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
-curLabel.style.left=e.clientX+'px';curLabel.style.top=e.clientY+'px';
-});
-document.querySelectorAll('a,.prow,.card,.vbtn,.archive-toggle,.mclose,.arc-slide').forEach(el=>{
-el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
-// contextual cursor labels
-function bindLabel(sel,text){
-document.querySelectorAll(sel).forEach(el=>{
-el.addEventListener('mouseenter',()=>{curLabel.textContent=text;curLabel.classList.add('show');});
-el.addEventListener('mouseleave',()=>curLabel.classList.remove('show'));
-});
+const isTouch=window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+if(!isTouch){
+  document.addEventListener('mousemove',e=>{
+    cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+    curLabel.style.left=e.clientX+'px';curLabel.style.top=e.clientY+'px';
+    cur.style.opacity='1';
+  });
+  document.querySelectorAll('a,.prow,.card,.vbtn,.archive-toggle,.mclose,.arc-slide,.lbox-close,.lbox-nav,.arc-hint').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+  });
+  function bindLabel(sel,text){
+    document.querySelectorAll(sel).forEach(el=>{
+      el.addEventListener('mouseenter',()=>{curLabel.textContent=text;curLabel.classList.add('show');});
+      el.addEventListener('mouseleave',()=>curLabel.classList.remove('show'));
+    });
+  }
+  bindLabel('.prow','read →');
+  bindLabel('.card','open →');
+  bindLabel('.pe-hero-img,.pe-strip a,.pe-imgs a,.arc-slide a','view');
+  bindLabel('.c-email','say hi →');
+  const heroNameEl=document.getElementById('heroName');
+  heroNameEl.addEventListener('mouseenter',()=>{cur.classList.add('onname');cur.classList.remove('big');});
+  heroNameEl.addEventListener('mouseleave',()=>cur.classList.remove('onname'));
+
+  // fail-safe fade
+  let curTimeout;
+  document.addEventListener('mousemove',()=>{
+    clearTimeout(curTimeout);
+    curTimeout=setTimeout(()=>{cur.style.opacity='0';},2500);
+  });
+  window.addEventListener('blur',()=>{cur.style.opacity='0';});
+}else{
+  cur.style.display='none';
+  curLabel.style.display='none';
 }
-bindLabel('.prow','read →');
-bindLabel('.card','open →');
-bindLabel('.pe-hero-img,.pe-strip a,.pe-imgs a,.arc-slide a','view');
-bindLabel('.c-email','say hi →');
-// cursor changes on name hover
-const heroNameEl=document.getElementById('heroName');
-heroNameEl.addEventListener('mouseenter',()=>{cur.classList.add('onname');cur.classList.remove('big');});
-heroNameEl.addEventListener('mouseleave',()=>cur.classList.remove('onname'));
+
 // Nav solid on scroll
 const navEl=document.getElementById('nav');
 window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>40),{passive:true});
@@ -839,23 +868,24 @@ setInterval(()=>{
 tel.classList.add('hide');
 setTimeout(()=>{ti=(ti+1)%thoughts.length;tel.textContent=thoughts[ti];tel.classList.remove('hide');},550);
 },4800);
-// Mind-map node data
+
+// ── Mind-map project data (restructured copy with visible bold subheadings:
+// Brief/Scope, Insight, Approach, Outcome/Recognition — kept in original voice) ──
 const pdata=[
-{num:"01",lbl:"Brand Strategy & Identity",title:"Held Within",sub:"2025 brand strategy / identity / storytelling",meta:"2025 · branding / print / spatial",body:"A concept-led brand system exploring storytelling for third-culture identities. Responding to the brief of creating an \u201corigin brand,\u201d I developed Held Within as a hybrid print-digital platform centred on belonging, memory and in-between cultural experiences.\n\nThis personally driven brand led me to reflect on my own experiences. I aimed to fill a gap I wish had existed for me: an intentional publication space for in-betweeners, a comfort space to keep and share stories that spiral and evolve.\n\nDriven by research into diasporic identity, it was created to honour plural identities, a niche audience for a space rarely seen. I approached the identity as a narrative system, considering how my target audience would see themselves reflected within the brand across print, digital and spatial applications.\n\nThrough customer journeys, activations, editorial design and tactile applications, the project explores how branding can create recognition, intimacy and community for underrepresented perspectives.",note:"",imgs:["Billboard_Mockup_3.jpg","Billboard_Mockup2_final.jpg","poster_FINAL_mockup.jpg","Stationary_Mockup_2.jpg","ig_mockups_fnal_.jpg","Magazine_mockup_open.jpg","hw_posters.jpg","hw_business_cards.jpg","hw_cards_front.jpg","hw_activation.jpg","hw_colour.jpg","hw_fonts.jpg","hw_logo.jpg","hw_moodboard.jpg"]},
-{num:"02",lbl:"Information Design",title:"ROSYD International",sub:"2026 publication / campaign / retail branding",meta:"2026 · publication / campaign",body:"Worked across print and digital collateral for ROSYD International\u2019s duty-free retail stores, developing multilingual brochures, EDMs, retail photography, and publication advertisements for affiliated airlines including China Airlines.\n\nThe project required balancing clarity, accessibility, and brand consistency across multiple formats, audiences, and languages. My approach focused on creating adaptable layouts and typography systems that could translate seamlessly between print and digital environments while remaining visually cohesive.\n\nAlongside image-making and post-production, the work strengthened my understanding of production design, hierarchy, and designing within established commercial brand constraints for large-scale international audiences.",note:"",imgs:["rosyd_broch_cover.jpg","rosyd_broch_eng.jpg","rosyd_broch_langs.jpg","rosyd_broch_jp.jpg","magazine_spread_mockup.jpg","rosyd_store1.jpg","rosyd_store2.jpg","rosyd_store3.jpg"]},
-{num:"03",lbl:"Brand Activation",title:"Daily Blooms × Bondi Boost",sub:"2025 brand activation / curation / experiential",meta:"2025 · brand activation",body:"For the Daily Blooms \u00d7 Bondi Boost PR launch at That Paper Joint, I developed curated collage kits designed to turn branded materials into something more tactile and participatory.\n\nRather than simply pulling from the brands' surface-level visual cues, I looked for the ideas underneath them: leisure, femininity, wellness, nostalgia and handmade intimacy. Shaping the visual direction and materials around these hidden cues felt more useful than working from branding alone.\n\nThe result was an activation people could actually do something with, making, playing and crafting their own little stories through the collaging experience: memorable engagement through design.",note:"",imgs:["db_wide.jpg","db_new_02.jpg","db_closeup_new.jpg"]},
-{num:"04",lbl:"Art Direction for Interiors",title:"The Monty Motel Commission",sub:"2025 collage / spatial storytelling / art direction",meta:"2025 · collage / art direction",body:"Assisted design studio 'That Paper Joint' in early developments bespoke collage artworks for The Monty Boutique Motel, responding to themes of road-trip culture tied to their Great Ocean Road location.\n\nThe process involved researching the motel\u2019s visual identity and translating these themes into layered physical and digital collage compositions for interior spaces. Working across material sourcing, composition development, scanning, and digital refinement, I contributed to shaping artworks that extended the motel\u2019s atmosphere beyond branding into the spatial experience itself.\n\nThe project strengthened my interest in environmental storytelling and how visual systems can shape the emotional tone of physical spaces.",note:"First image sourced from <a href=\"https://www.themontymotel.com.au/\" target=\"_blank\" rel=\"noopener\">The Monty Motel's website</a>, shown in context, not my own photograph.",imgs:["monty_hotel.jpg","monty_new.jpg","monty_collage2_new.jpg","monty_collage_grid.jpg"]},
-{num:"05",lbl:"Installation Art",title:"A Place at Every Table",sub:"2022 installation / relational / multisensory",meta:"2022 · installation",body:"What does my family dinner table remember?\nA Place at Every Table is a relational installation exploring immigration, assimilation and cultural memory through food, fabric, conversation and participation. Centred around my family dining table, the work brought together the countries, cuisines, recipes and stories that shaped my upbringing across multiple cultural contexts.\n\nI used interviews, handwritten recipes, printmaking, textiles and culturally specific ingredients to turn the table into both an archive and a living performance space. My family's participation became central to the work itself, they were invited to eat directly from the installation, with spills, stains and traces of interaction gradually changing its surface.\n\nThis evolving, colourful mess became a metaphor for how identities, histories and traditions are continuously inherited and adapted by the people gathered around them.",note:"",imgs:["table_thumb.jpg","table_new1.jpg","table_new2.jpg","table_overview.jpg","table_detail1.jpg","table_detail2.jpg","table_detail3.jpg"]},
-{num:"06",lbl:"Speculative Service Design / UX Strategy / Civic Systems Design",title:"Mars Integration Network",sub:"2026 speculative service design / UX strategy / civic systems design",meta:"2026 · speculative service design",body:"What happens when institutions stop translating lived experience into administrative value?\nMars Integration Network uses design fiction to reimagine a six-step permanent residency assessment through two parallel systems of value. On Earth, applicants are assessed through economic productivity and institutional classification. On Mars, contribution is measured through adaptability, collective survival and community resilience. By relocating the same procedure into a resource-dependent 'Martian' (foreign to us) settlement, the project asks how much our ideas of worth, belonging and citizenship are shaped by the environments we live in.\n\nI developed the service concept from strategy through to experience, creating service journeys, blueprints, civic artefacts, environmental storyboards and UI systems. The project also strengthened my AI-assisted workflow, using prompt engineering within Figma to rapidly prototype interface concepts.",note:"Project part of RMIT University \u2014 Experimental Experience Design Studio, a 12-week speculative design course exploring alternative models of permanent residency assessment (Mars-Local). Awarded High Distinction (90/100) in the studio.<br><br>To view the full Mars Integration Network walkthrough, <a href=\"https://www.emaze.com/@ALFQQQOWR/nupur---mars-walkthrough\" target=\"_blank\" rel=\"noopener\">click here</a>.",imgs:["mars_thumbnail.jpg","mars_entry.jpg","mars_classification.jpg","mars_earth_screens.jpg","mars_kiosk.jpg","mars_submission_mockup.jpg","mars_submission_final.jpg","mars_outcome.jpg","mars_support_mockup2.jpg","mars_artefact_01.jpg","mars_artefact_02.jpg"]},
-{num:"07",lbl:"Service Design · Research · Service Blueprint · Prototyping",title:"State Library Companion",sub:"2026 service design / research / service blueprint / prototyping",meta:"2026 · service design / research",body:"How do you find your place in a space you're not familiar with?\nLibraries can be intimidating when you don't know where to go, what you're looking for, or whether you're even in the right place. Developed for State Library Victoria, this fictional service design project explores how personalised guidance could make navigating complex public spaces feel more intuitive and welcoming, extending beyond wayfinding to the resources and services within these environments.\n\nThe resulting concept creates a connective layer between people, places and information, helping visitors discover with more confidence.\n\nI led much of the initial ideation and conceptual development, as well as directing the project's photography and videography. The stills shown here are taken from our final film.",note:"",imgs:["library_thumbnail.jpg","library_extra_01.jpg","library_extra_02.jpg","library_concept_01.jpg","library_concept_02.jpg","library_concept_03.jpg"]},
-{num:"08",lbl:"part of international common design studio, 2026",title:"The Unnoticed Patterns",sub:"Common Design Studio · collaborative moving image · 2026",meta:"2026 · Common Design Studio",body:"What does a place remember that we don't?\nDeveloped through the international Common Design Studio, The Unnoticed Patterns explores home as something more complicated than a place we carry with us. Working across Australia, Vietnam, India and Spain, we looked to architecture, materials, sounds and everyday encounters to build a shared visual language around how places shape us.\n\nI contributed to concept development, visual research, copywriting and narrative direction, helping shape the project's central question and overall storytelling.\n\nReceiving international recognition, this project was selected for Urban Digital Canvas Shanghai 2026, an international digital arts exhibition presented by the ACM SIGGRAPH Digital Arts Community, Chewing Theory and the City of Shanghai as part of the Shanghai International Light Festival. The work will be exhibited for site-specific digital screens across Shanghai's Changning District.\n\nAlongside the collaborative work, I independently designed an editorial publication documenting the process from beginning to end, combining my own reflections with the exhibition design and final outcomes. The magazine pages shown here are my individual work.",note:"Selected for <a href=\"https://dac.siggraph.org/exhibition/2026-urban-digital-canvas-shanghai/\" target=\"_blank\" rel=\"noopener\">Urban Digital Canvas Shanghai 2026</a>. View the official Common Design Studio page for this project <a href=\"https://www.commondesignstudio.net/recipes-for-action/categories/home\" target=\"_blank\" rel=\"noopener\">here</a>.",video:"WOKBqxgsKFU",videoNote:"group work \u2014 our team's video, \"The Unnoticed Patterns\"",imgs:["unnoticed_poster_full.jpg","unnoticed_poster_mockup.jpg","unnoticed_mag01.jpg","unnoticed_mag02.jpg","unnoticed_mag03.jpg","unnoticed_mag04.jpg","unnoticed_mag05.jpg","unnoticed_mag06.jpg"]},
+{num:"01",lbl:"Brand Strategy & Identity Concept",title:"Held Within",sub:"2025 brand strategy / identity / storytelling",meta:"2025 · branding / print / spatial",body:"<p><strong>Brief</strong>Responding to the brief of creating an \u201corigin brand,\u201d I developed Held Within as a hybrid print-digital platform centred on belonging, memory and in-between cultural experiences.</p><p><strong>Insight</strong>This personally driven brand led me to reflect on my own experiences. I aimed to fill a gap I wish had existed for me: an intentional publication space for in-betweeners, a comfort space to keep and share stories that spiral and evolve. Driven by research into diasporic identity, it was created to honour plural identities, a niche audience for a space rarely seen.</p><p><strong>Approach</strong>I approached the identity as a narrative system, considering how my target audience would see themselves reflected within the brand. The result is a full campaign system spanning print, digital and spatial applications, customer journeys, activations, editorial design and tactile touchpoints, exploring how branding can create recognition, intimacy and community for underrepresented perspectives.</p>",note:"",imgs:["Billboard_Mockup_3.jpg","Billboard_Mockup2_final.jpg","poster_FINAL_mockup.jpg","Stationary_Mockup_2.jpg","ig_mockups_fnal_.jpg","Magazine_mockup_open.jpg","hw_posters.jpg","hw_business_cards.jpg","hw_cards_front.jpg","hw_activation.jpg","hw_colour.jpg","hw_fonts.jpg","hw_logo.jpg","hw_moodboard.jpg"]},
+{num:"02",lbl:"Information Design",title:"ROSYD International",sub:"2026 publication / campaign / retail branding",meta:"2026 · publication / campaign",body:"<p><strong>Brief</strong>Worked across print and digital collateral for ROSYD International\u2019s Sydney-based duty-free retail stores, developing multilingual brochures, EDMs, retail photography, and publication advertisements for affiliated airlines including China Airlines.</p><p><strong>Insight</strong>The project required balancing clarity, accessibility, and brand consistency across multiple formats, audiences, and languages.</p><p><strong>Approach</strong>My approach focused on the brochure and publication design itself as much as the photography, creating adaptable layouts and typography systems that could translate seamlessly between print and digital environments while remaining visually cohesive across languages. Alongside image-making and post-production, the work strengthened my understanding of production design, hierarchy, and designing within established commercial brand constraints for large-scale international audiences.</p><p><strong>Outcome</strong>My brochure and publication designs were subsequently used by ROSYD\u2019s affiliate, China Airlines, and featured in their in-flight magazine as promotional advertising for ROSYD\u2019s duty-free retail stores.</p>",note:"",imgs:["rosyd_broch_cover.jpg","rosyd_broch_eng.jpg","rosyd_broch_langs.jpg","rosyd_broch_jp.jpg","magazine_spread_mockup.jpg","rosyd_store1.jpg","rosyd_store2.jpg","rosyd_store3.jpg"]},
+{num:"03",lbl:"Brand Activation Collateral",title:"Daily Blooms × Bondi Boost",sub:"2025 brand activation / curation / experiential",meta:"2025 · brand activation",body:"<p><strong>Brief</strong>For the Daily Blooms \u00d7 Bondi Boost PR launch at That Paper Joint, I developed curated collage kits designed to turn branded materials into something more tactile and participatory.</p><p><strong>Insight</strong>Rather than simply pulling from the brands' surface-level visual cues, I looked for the ideas underneath them: leisure, femininity, wellness, nostalgia and handmade intimacy. Shaping the visual direction and materials around these hidden cues felt more useful than working from branding alone.</p><p><strong>Outcome</strong>The result was an activation people could actually do something with, making, playing and crafting their own little stories through the collaging experience: memorable engagement through design.</p>",note:"",imgs:["db_wide.jpg","db_new_02.jpg","db_closeup_new.jpg"]},
+{num:"04",lbl:"Art Direction for Interiors",title:"The Monty Motel Commission",sub:"2025 collage / spatial storytelling / art direction",meta:"2025 · collage / art direction",body:"<p><strong>Scope</strong>Assisted design studio That Paper Joint in developing bespoke collage artworks for The Monty Boutique Motel, responding to themes of travel, nostalgia, landscape, and road-trip culture tied to their Great Ocean Road location.</p><p><strong>Approach</strong>The process involved researching the motel\u2019s visual identity and translating these themes into layered physical and digital collage compositions for interior spaces. Working across material sourcing, composition development, scanning, and digital refinement, I contributed to shaping artworks that extended the motel\u2019s atmosphere beyond branding into the spatial experience itself.</p><p><strong>Outcome</strong>The project strengthened my interest in environmental storytelling and how visual systems can shape the emotional tone of physical spaces.</p>",note:"First image sourced from <a href=\"https://www.themontymotel.com.au/\" target=\"_blank\" rel=\"noopener\">The Monty Motel's website</a>, shown in context, not my own photograph.",imgs:["monty_hotel.jpg","monty_new.jpg","monty_collage2_new.jpg","monty_collage_grid.jpg"]},
+{num:"05",lbl:"Installation Art",title:"A Place at Every Table",sub:"2022 installation / relational / multisensory",meta:"2022 · installation",body:"<p><strong>Scope</strong>What does my family dinner table remember? A Place at Every Table is a relational installation exploring immigration, assimilation and cultural memory through food, fabric, conversation and participation. Centred around my family dining table, the work brought together the countries, cuisines, recipes and stories that shaped my upbringing across multiple cultural contexts.</p><p><strong>Approach</strong>I used interviews, handwritten recipes, printmaking, textiles and culturally specific ingredients to turn the table into both an archive and a living performance space. My family's participation became central to the work itself, they were invited to eat directly from the installation, with spills, stains and traces of interaction gradually changing its surface.</p><p><strong>Outcome</strong>This evolving, colourful mess became a metaphor for how identities, histories and traditions are continuously inherited and adapted by the people gathered around them.</p>",note:"",imgs:["table_thumb.jpg","table_new1.jpg","table_new2.jpg","table_overview.jpg","table_detail1.jpg","table_detail2.jpg","table_detail3.jpg"]},
+{num:"06",lbl:"Speculative Service Design / UX Strategy / Civic Systems Design",title:"Mars Integration Network",sub:"2026 speculative service design / UX strategy / civic systems design",meta:"2026 · speculative service design",body:"<p><strong>Brief</strong>What happens when institutions stop translating lived experience into administrative value? Mars Integration Network uses speculative design to reimagine a six-step permanent residency assessment through two parallel systems of value.</p><p><strong>Insight</strong>On Earth, applicants are assessed through economic productivity and institutional classification. On Mars, contribution is measured through adaptability, collective survival and community resilience. By relocating the same procedure into a resource-dependent 'Martian' (foreign to us) settlement, the project asks how much our ideas of worth, belonging and citizenship are shaped by the environments we live in.</p><p><strong>Approach</strong>I developed the service concept from strategy through to experience, creating service journeys, blueprints, civic artefacts, environmental storyboards and UI systems. The project also strengthened my AI-assisted workflow, using prompt engineering within Figma to rapidly prototype interface concepts.</p>",note:"Project part of RMIT University \u2014 Experimental Experience Design Studio, a 12-week speculative design course exploring alternative models of permanent residency assessment (Mars-Local). Awarded High Distinction (90/100) in the studio.<br><br>To view the full Mars Integration Network walkthrough, <a href=\"https://www.emaze.com/@ALFQQQOWR/nupur---mars-walkthrough\" target=\"_blank\" rel=\"noopener\">click here</a>.",imgs:["mars_thumbnail.jpg","mars_entry.jpg","mars_classification.jpg","mars_earth_screens.jpg","mars_kiosk.jpg","mars_submission_mockup.jpg","mars_submission_final.jpg","mars_outcome.jpg","mars_support_mockup2.jpg","mars_artefact_01.jpg","mars_artefact_02.jpg"]},
+{num:"07",lbl:"Service Design · Research · Service Blueprint · Prototyping",title:"State Library Companion",sub:"2026 service design / research / service blueprint / prototyping",meta:"2026 · service design / research",body:"<p><strong>Brief</strong>How do you find your place in a space you're not familiar with? Libraries can be intimidating when you don't know where to go, what you're looking for, or whether you're even in the right place. Developed for State Library Victoria, this fictional service design project explores how personalised guidance could make navigating complex public spaces feel more intuitive and welcoming, extending beyond wayfinding to the resources and services within these environments.</p><p><strong>Approach</strong>The resulting concept creates a connective layer between people, places and information, helping visitors discover with more confidence. I led much of the initial ideation and conceptual development, as well as directing the project's photography and videography.</p><p><strong>Outcome</strong>The stills shown here are taken from our final film.</p>",note:"",imgs:["library_thumbnail.jpg","library_extra_01.jpg","library_extra_02.jpg","library_concept_01.jpg","library_concept_02.jpg","library_concept_03.jpg"]},
+{num:"08",lbl:"part of international common design studio, 2026",title:"The Unnoticed Patterns",sub:"Common Design Studio · collaborative moving image · 2026",meta:"2026 · Common Design Studio",body:"<p><strong>Scope</strong>What does a place remember that we don't? Developed through the international Common Design Studio, The Unnoticed Patterns explores home as something more complicated than a place we carry with us. Working across Australia, Vietnam, India and Spain, we looked to architecture, materials, sounds and everyday encounters to build a shared visual language around how places shape us.</p><p><strong>Approach</strong>I contributed to concept development, visual research, copywriting and narrative direction, helping shape the project's central question and overall storytelling. Alongside the collaborative work, I independently designed an editorial publication documenting the process from beginning to end, combining my own reflections with the exhibition design and final outcomes; the magazine pages shown here are my individual work.</p><p><strong>Recognition</strong>Receiving international recognition, this project was selected for Urban Digital Canvas Shanghai 2026, an international digital arts exhibition presented by the ACM SIGGRAPH Digital Arts Community, Chewing Theory and the City of Shanghai as part of the Shanghai International Light Festival. The work will be exhibited for site-specific digital screens across Shanghai's Changning District.</p>",note:"Selected for <a href=\"https://dac.siggraph.org/exhibition/2026-urban-digital-canvas-shanghai/\" target=\"_blank\" rel=\"noopener\">Urban Digital Canvas Shanghai 2026</a>. View the official Common Design Studio page for this project <a href=\"https://www.commondesignstudio.net/recipes-for-action/categories/home\" target=\"_blank\" rel=\"noopener\">here</a>.",video:"WOKBqxgsKFU",videoNote:"group work \u2014 our team's video, \"The Unnoticed Patterns\"",imgs:["unnoticed_poster_full.jpg","unnoticed_poster_mockup.jpg","unnoticed_mag01.jpg","unnoticed_mag02.jpg","unnoticed_mag03.jpg","unnoticed_mag04.jpg","unnoticed_mag05.jpg","unnoticed_mag06.jpg"]},
 ];
-const modal=document.getElementById('modal');
-document.getElementById('mclose').onclick=()=>{modal.classList.remove('open');document.body.style.overflow='';document.getElementById('projects').scrollIntoView({block:'start'});};
-modal.onclick=e=>{};
+
 document.querySelectorAll('.mm-node').forEach(node=>{
 node.addEventListener('click',()=>openModal(parseInt(node.dataset.p)));
 });
+
 function drawConnectors(){
 const mm=document.getElementById('mindmap');
 if(!mm||window.innerWidth<=900)return;
@@ -884,6 +914,7 @@ svg.innerHTML=paths;
 }
 window.addEventListener('load',drawConnectors);
 window.addEventListener('resize',drawConnectors);
+
 function initStripScrollHint(strip){
 if(strip.dataset.hintBound)return;
 strip.dataset.hintBound='1';
@@ -897,13 +928,27 @@ if(hint&&hint.classList.contains('pe-scroll-hint'))hint.style.opacity=atEnd?'0':
 strip.addEventListener('scroll',update,{passive:true});
 update();
 }
+
+/* ──────────────────────────────────────────────────────────
+   NAVIGATION HISTORY
+   Every time a full-page project modal opens, we push a history
+   entry. Browser back button, trackpad two-finger swipe-back,
+   mobile edge-swipe-back, and the Escape key all resolve through
+   the same handler, closing the modal and returning to the
+   Selected Works mind-map, exactly like flicking through a
+   native app between projects.
+   ────────────────────────────────────────────────────────── */
+let modalOpen=false;
+
+const modal=document.getElementById('modal');
+
 function openModal(i){
 const p=pdata[i];
 document.getElementById('mlbl').textContent=p.lbl;
 document.getElementById('mtitle').textContent=p.title;
 document.getElementById('mmeta').textContent=p.meta;
 document.getElementById('msub').textContent=p.sub;
-document.getElementById('mbody').textContent=p.body;
+document.getElementById('mbody').innerHTML=p.body;
 document.getElementById('mnote').innerHTML=p.note||'';
 document.getElementById('mnote').style.display=p.note?'block':'none';
 const mi=document.getElementById('mimgs');
@@ -928,12 +973,47 @@ if(strip)initStripScrollHint(strip);
 modal.classList.add('open');
 window.scrollTo(0,0);
 document.body.style.overflow='hidden';
+modalOpen=true;
+history.pushState({modal:true,project:i},'','');
 }
+
+function closeModal(){
+if(!modalOpen)return;
+modal.classList.remove('open');
+document.body.style.overflow='';
+modalOpen=false;
+document.getElementById('projects').scrollIntoView({block:'start'});
+}
+
+document.getElementById('mclose').onclick=()=>{
+closeModal();
+if(history.state&&history.state.modal)history.back();
+};
+modal.onclick=e=>{};
+
+// Escape closes lightbox first if open, otherwise closes the project modal
+document.addEventListener('keydown',e=>{
+if(e.key!=='Escape')return;
+if(document.getElementById('lbox').classList.contains('open')){closeLbox();return;}
+if(modalOpen){
+closeModal();
+if(history.state&&history.state.modal)history.back();
+}
+});
+
+// Browser back button AND trackpad two-finger swipe-back AND mobile
+// edge-swipe-back all fire 'popstate' in a standard browser, since we
+// pushed a history entry when the modal opened.
+window.addEventListener('popstate',()=>{
+if(document.getElementById('lbox').classList.contains('open'))closeLbox();
+if(modalOpen)closeModal();
+});
+
 let lboxGallery=[],lboxIdx=0;
 function openLbox(e,el){
 e.preventDefault();
 const carousel=el.closest('.pe-carousel');
-const container=el.closest('.pe-imgs,.m-imgs,.arc-slider');
+const container=el.closest('.pe-imgs,.m-imgs,.arc-slider,.arc-photo-grid');
 if(carousel){
 lboxGallery=Array.from(carousel.querySelectorAll('a')).map(a=>a.getAttribute('href'));
 lboxIdx=lboxGallery.indexOf(el.getAttribute('href'));
@@ -963,14 +1043,13 @@ function closeLbox(){document.getElementById('lbox').classList.remove('open');}
 document.getElementById('lbox').addEventListener('click',function(e){if(e.target===this)closeLbox();});
 document.addEventListener('keydown',e=>{
 if(!document.getElementById('lbox').classList.contains('open'))return;
-if(e.key==='Escape')closeLbox();
 if(e.key==='ArrowLeft')lboxStep(-1);
 if(e.key==='ArrowRight')lboxStep(1);
 });
+
 function toggleAboutMore(){
 const m=document.getElementById('about-more');
 const b=document.getElementById('about-more-btn');
-const arr=document.getElementById('about-more-arr');
 const isOpen=m.classList.toggle('open');
 b.classList.toggle('open',isOpen);
 b.childNodes[0].textContent=isOpen?'show less ':'continue reading ';
