@@ -198,8 +198,8 @@ background:var(--lgrey);
 .about-more>*{overflow:hidden;min-height:0;}
 .about-more.open{grid-template-rows:1fr;opacity:1;margin-top:.85rem;}
 .about-more.open>p{overflow:visible;}
-.about-more-btn{margin:0 0 .35rem;font-family:'Mansalva',cursive;font-size:1rem;color:var(--acc);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.35rem;padding:.3rem 0;order:-1;}
-.about-hook{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:#3a3a3a;margin-bottom:.35rem;}
+.about-more-btn{margin:0 0 .35rem;font-family:'Mansalva',cursive;font-size:1.5rem;color:var(--acc);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.4rem 0;order:-1;}
+.about-hook{font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.7;color:#3a3a3a;margin-bottom:.5rem;}
 .about-more-btn:hover{opacity:.7;}
 .about-more-btn #about-more-arr{transition:transform .3s ease;display:inline-block;}
 .about-more-btn.open #about-more-arr{transform:rotate(180deg);}
@@ -271,26 +271,81 @@ transition:opacity .3s;
 .pe-scroll-hint{display:flex;align-items:center;gap:.4rem;font-family:'Mansalva',cursive;font-size:.72rem;color:var(--acc);}
 .pe-scroll-hint svg{width:13px;height:13px;animation:nudgeRight 1.4s ease-in-out infinite;}
 @keyframes nudgeRight{0%,100%{transform:translateX(0);}50%{transform:translateX(4px);}}
-/* ── MIND MAP (Selected Works) ── */
-.mindmap{position:relative;width:999px;height:960px;max-width:100%;margin:.2rem auto 0;}
-.mindmap-scale{width:100%;overflow-x:auto;}
-svg.connectors{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible;}
-.mm-node{position:absolute;width:210px;cursor:none;transition:transform .25s ease;z-index:2;}
-.mm-node:hover{transform:scale(1.04);}
-.mm-frame{position:relative;padding:10px;}
-.mm-frame img{width:100%;height:150px;object-fit:cover;display:block;background:var(--lgrey);}
-.mm-deco{position:absolute;inset:-8px;width:calc(100% + 16px);height:calc(100% + 16px);pointer-events:none;}
-.mm-cap{font-family:'Mansalva',cursive;font-size:.82rem;color:var(--acc);margin-top:.6rem;text-align:center;line-height:1.4;}
-.mm-num{position:absolute;top:-12px;left:-12px;width:28px;height:28px;background:var(--bg);color:var(--acc);border:1.4px solid var(--acc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:700;font-size:.65rem;z-index:3;}
-.centre-wrap{position:absolute;left:407px;top:375px;width:190px;height:190px;display:flex;align-items:center;justify-content:center;z-index:1;}
-.centre-circle{position:absolute;inset:0;width:100%;height:100%;}
-.centre-label{position:relative;font-family:'Mansalva',cursive;font-weight:400;font-size:.78rem;text-align:center;line-height:1.32;z-index:1;padding:0 1.3rem;color:var(--acc);}
-@media (max-width:900px){
-.mindmap{height:auto;display:flex;flex-direction:column;align-items:center;}
-svg.connectors{display:none;}
-.centre-wrap{position:static;width:180px;height:180px;margin-bottom:2.5rem;}
-.mm-node{position:static;width:100%;max-width:280px;margin:0 auto 2.5rem;}
+/* ── SELECTED WORKS GRID (asymmetric, editorial) ── */
+.work-grid{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:1.4rem;
+padding:0 3rem;
+max-width:1400px;
+margin:0 auto;
 }
+.work-card{
+position:relative;
+cursor:none;
+grid-column:span 3;
+}
+.work-card.size-lg{grid-column:span 3;}
+.work-card.size-sm{grid-column:span 2;}
+.work-frame{
+position:relative;
+padding:6px;
+transition:transform .3s ease;
+}
+.work-card:hover .work-frame{transform:translateY(-4px);}
+.work-frame img{
+width:100%;
+aspect-ratio:4/3;
+object-fit:cover;
+display:block;
+background:var(--lgrey);
+}
+.work-deco{
+position:absolute;
+inset:-4px;
+width:calc(100% + 8px);
+height:calc(100% + 8px);
+pointer-events:none;
+}
+.work-cap{
+display:flex;
+justify-content:space-between;
+align-items:baseline;
+margin-top:.7rem;
+gap:.6rem;
+}
+.work-cap-title{
+font-family:'Poppins',sans-serif;
+font-weight:700;
+font-size:.92rem;
+text-transform:uppercase;
+letter-spacing:-.01em;
+line-height:1.15;
+}
+.work-cap-meta{
+font-family:'Cormorant Garamond',serif;
+font-style:normal;
+font-size:.78rem;
+color:var(--grey);
+white-space:nowrap;
+flex-shrink:0;
+}
+.work-card.archive .work-frame{opacity:.82;}
+.work-card.archive .work-deco{opacity:.55;}
+.work-card.archive .work-cap-title{color:#4a4a4a;}
+@media (max-width:700px){
+.work-grid{grid-template-columns:1fr;padding:0 1.5rem;gap:2rem;}
+.work-card{grid-column:span 1!important;}
+}
+/* section divider using accent colour, per director's note on using vertical space clearly */
+.section-divider{
+padding:3.2rem 3rem 2rem;
+max-width:1400px;
+margin:0 auto;
+border-top:1px solid rgba(139,58,42,.28);
+}
+.section-divider-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;}
+@media (max-width:700px){.section-divider{padding:2.4rem 1.5rem 1.6rem;}}
 #canvas-view{display:none;position:relative;width:100%;height:760px;overflow:hidden;background:var(--bg);border:1px solid rgba(139,58,42,.12);border-radius:14px;}
 .canvas-centre{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;pointer-events:none;width:200px;}
 .canvas-ring{width:188px;height:188px;border:1px dashed rgba(139,58,42,.3);border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;animation:spinSlow 30s linear infinite;}
@@ -322,8 +377,9 @@ svg.connectors{display:none;}
 .m-header-meta{text-align:right;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;color:rgba(242,240,235,.75);white-space:nowrap;}
 .mclose{flex:0 0 auto;font-family:'Mansalva',cursive;font-size:1.05rem;color:rgba(242,240,235,.75);cursor:none;background:none;border:none;z-index:2;white-space:nowrap;padding:.55rem .8rem;display:flex;align-items:center;gap:.35rem;}
 .mclose:hover{color:var(--bg);}
-.m-body-wrap{padding:2.8rem 3rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.m-body-wrap{padding:2.8rem 3rem 4rem;display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:3.5rem;align-items:start;}
 .m-sub{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.88rem;color:var(--acc);margin-bottom:1.1rem;display:block;}
+.m-text{position:sticky;top:2.8rem;}
 .m-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.9;color:#3a3a3a;}
 .m-body p{margin-bottom:1.15rem;}
 .m-body p:last-child{margin-bottom:0;}
@@ -331,22 +387,18 @@ svg.connectors{display:none;}
 .m-body em{font-style:normal;font-family:'Cormorant Garamond',serif;color:#3a3a3a;}
 .m-note{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.9rem;line-height:1.75;color:var(--grey);margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--lgrey);}
 .m-note a{color:var(--acc);text-decoration:underline;}
-.m-imgs{display:flex;flex-direction:column;gap:.6rem;}
-.m-hero{display:block;cursor:zoom-in;position:relative;}
-.m-hero img{width:100%;display:block;object-fit:contain;background:#f0eee9;transition:opacity .2s;}
-.m-hero:hover img{opacity:.9;}
-.m-scroll-hint{display:flex;align-items:center;gap:.4rem;font-family:'Mansalva',cursive;font-size:.72rem;color:var(--acc);}
-.m-scroll-hint svg{width:13px;height:13px;animation:nudgeRight 1.4s ease-in-out infinite;}
-.m-strip-wrap{position:relative;}
-.m-strip{display:flex;gap:.4rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:.3rem;}
-.m-strip::-webkit-scrollbar{height:4px;}
-.m-strip::-webkit-scrollbar-thumb{background:var(--lgrey);border-radius:10px;}
-.m-strip a{flex:0 0 31%;scroll-snap-align:start;cursor:zoom-in;display:block;}
-.m-strip img{width:100%;display:block;object-fit:cover;aspect-ratio:4/3;background:#eee;transition:opacity .2s;}
-.m-strip a:hover img{opacity:.85;}
-.m-strip-wrap::after{content:'';position:absolute;top:0;bottom:.3rem;right:0;width:36px;background:linear-gradient(to right, rgba(242,240,235,0), var(--bg));pointer-events:none;opacity:var(--fade-opacity,1);transition:opacity .3s;}
-.m-video{position:relative;width:100%;padding-bottom:56.25%;background:#000;margin-bottom:.3rem;}
+/* full 2-col masonry image grid: all images visible at once, vertically scrollable with the page, not a click-through carousel */
+.m-imgs{column-count:2;column-gap:.9rem;}
+.m-imgs>a{display:block;break-inside:avoid;margin-bottom:.9rem;cursor:zoom-in;}
+.m-imgs img{width:100%;display:block;object-fit:cover;background:#eee;transition:opacity .2s;}
+.m-imgs a:hover img{opacity:.9;}
+.m-video{position:relative;width:100%;aspect-ratio:9/16;max-width:340px;background:#000;margin-bottom:.9rem;break-inside:avoid;}
 .m-video iframe{position:absolute;inset:0;width:100%;height:100%;}
+@media (max-width:900px){
+.m-body-wrap{grid-template-columns:1fr;}
+.m-text{position:static;}
+.m-imgs{column-count:1;}
+}
 @media (max-width:900px){
 .m-header{padding:1.2rem 1.5rem;flex-wrap:wrap;}
 .m-body-wrap{grid-template-columns:1fr;padding:2rem 1.5rem 3rem;gap:2rem;}
@@ -560,6 +612,109 @@ body{cursor:auto;}
 </div>
 </section>
 
+<!-- SELECTED WORKS — new asymmetric grid, sits right under name, above About -->
+<section id="projects">
+<div class="section-divider reveal">
+<div class="section-divider-inner" style="flex-direction:column;align-items:flex-start;gap:.5rem;">
+<h2 class="proj-h">Selected<br>Works</h2>
+<p class="proj-note" style="font-family:'Mansalva',cursive;font-size:.9rem;color:var(--acc);margin:0;">click a piece to step into it →</p>
+</div>
+</div>
+
+<div class="work-grid">
+
+<div class="work-card size-lg" data-p="0">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,5 Q1,50 4,95 Q50,98 96,95 Q99,50 96,5 Q50,2 4,5 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="Billboard_Mockup_3.jpg" alt="Held Within">
+</div>
+<div class="work-cap"><span class="work-cap-title">Held Within</span><span class="work-cap-meta">2025</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="1">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,4 Q50,1 95,4 Q99,50 95,96 Q50,99 5,96 Q1,50 5,4 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="rosyd_broch_cover.jpg" alt="ROSYD International">
+</div>
+<div class="work-cap"><span class="work-cap-title">ROSYD International</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="6">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,4 Q50,1 96,4 Q99,50 96,96 Q50,99 4,96 Q1,50 4,4 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="library_thumbnail.jpg" alt="State Library Companion">
+</div>
+<div class="work-cap"><span class="work-cap-title">State Library Companion</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-lg" data-p="8">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,5 Q1,50 4,95 Q50,99 96,95 Q99,50 96,5 Q50,1 4,5 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="1790068969519_for_when_deck_of_images_thumbnail.png" alt="For When">
+</div>
+<div class="work-cap"><span class="work-cap-title">For When</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="5">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,3 Q50,6 95,3 Q98,50 95,97 Q50,94 5,97 Q2,50 5,3 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="mars_submission_final.jpg" alt="Mars Integration Network">
+</div>
+<div class="work-cap"><span class="work-cap-title">Mars Integration Network</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-lg" data-p="7">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M3,3 Q10,0 17,3 T31,3 T45,3 T59,3 T73,3 T87,3 L97,3 Q100,10 97,17 T97,31 T97,45 T97,59 T97,73 T97,87 L97,97 Q90,100 83,97 T69,97 T55,97 T41,97 T27,97 T13,97 L3,97 Q0,90 3,83 T3,69 T3,55 T3,41 T3,27 T3,13 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="unnoticed_poster_mockup.jpg" alt="The Unnoticed Patterns">
+</div>
+<div class="work-cap"><span class="work-cap-title">The Unnoticed Patterns</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="2">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,4 Q50,1 95,4 Q99,50 95,96 Q50,99 5,96 Q1,50 5,4 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="db_wide.jpg" alt="Daily Blooms x Bondi Boost">
+</div>
+<div class="work-cap"><span class="work-cap-title">Daily Blooms × Bondi Boost</span><span class="work-cap-meta">2025</span></div>
+</div>
+
+<div class="work-card" data-p="3">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,4 Q50,1 96,4 Q99,50 96,96 Q50,99 4,96 Q1,50 4,4 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="monty_hotel.jpg" alt="The Monty Motel">
+</div>
+<div class="work-cap"><span class="work-cap-title">The Monty Motel</span><span class="work-cap-meta">2025</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="4">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,4 Q50,1 95,4 Q99,50 95,96 Q50,99 5,96 Q1,50 5,4 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="table_thumb.jpg" alt="A Place at Every Table">
+</div>
+<div class="work-cap"><span class="work-cap-title">A Place at Every Table</span><span class="work-cap-meta">2022</span></div>
+</div>
+
+<div class="work-card size-sm archive" data-p="10">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,5 Q1,50 4,95 Q50,98 96,95 Q99,50 96,5 Q50,2 4,5 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="port_grandmother.jpg" alt="Grandparent Gaze">
+</div>
+<div class="work-cap"><span class="work-cap-title">Grandparent Gaze</span><span class="work-cap-meta">2022</span></div>
+</div>
+
+<div class="work-card size-sm archive" data-p="11">
+<div class="work-frame">
+<svg class="work-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,4 Q50,1 95,4 Q99,50 95,96 Q50,99 5,96 Q1,50 5,4 Z" fill="none" stroke="#8B3A2A" stroke-width="0.7" opacity="0.75"/></svg>
+<img src="photo01.jpg" alt="Selected Photography">
+</div>
+<div class="work-cap"><span class="work-cap-title">Selected Photography</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+</div>
+
+</section>
+
 <!-- THOUGHT STRIP -->
 <div class="strip">
 <span class="strip-lbl">currently</span>
@@ -580,12 +735,7 @@ body{cursor:auto;}
 </div>
 <!-- body section -->
 <div class="about-body-section">
-<div class="about-r reveal-left">
-<div class="about-photo">
-<img src="cover_me.jpg" alt="Nupur Jain">
-</div>
-</div>
-<div class="reveal-right">
+<div class="reveal-left">
 <p class="slbl">about me</p>
 <p class="about-intro">Hi, I'm Nupur, a creative thinker, maker, and designer</p>
 <div class="about-body">
@@ -598,90 +748,12 @@ body{cursor:auto;}
 </div>
 </div>
 </div>
+<div class="about-r reveal-right">
+<div class="about-photo">
+<img src="cover_me.jpg" alt="Nupur Jain">
 </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-<div class="proj-top reveal" style="flex-direction:column;align-items:flex-start;gap:.4rem;border-bottom:none;padding-bottom:0;">
-<h2 class="proj-h">Selected<br>Works</h2>
-<p class="proj-note" style="font-family:'Mansalva',cursive;font-size:.9rem;color:var(--acc);margin:0;">click a piece to step into it →</p>
 </div>
-
-<div class="mindmap" id="mindmap">
-<svg class="connectors" id="connSvg"></svg>
-
-<div class="centre-wrap" id="centreWrap">
-<svg class="centre-circle" viewBox="0 0 190 190"><path d="M95,8 C140,6 182,42 184,92 C186,140 148,182 96,183 C48,184 8,146 7,96 C6,46 48,10 95,8Z" fill="none" stroke="#8B3A2A" stroke-width="1.8" opacity="0.75"/></svg>
-<div class="centre-label">Located somewhere between art direction, strategy and experience design.</div>
 </div>
-
-<div class="mm-node" data-p="0" style="left:323px;top:0px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,6 Q1,50 4,94 Q50,98 96,95 Q99,50 96,5 Q50,2 4,6 Z" fill="none" stroke="#8B3A2A" stroke-width="1.6" opacity="0.75"/></svg>
-<img src="Billboard_Mockup_3.jpg" alt="Held Within">
-</div>
-<div class="mm-cap">Held Within<br>brand strategy, 2025</div>
-</div>
-
-<div class="mm-node" data-p="1" style="left:597px;top:73px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,4 Q50,1 95,5 Q98,50 96,95 Q50,99 4,96 Q2,50 5,4 Z" fill="none" stroke="#8B3A2A" stroke-width="1.5" opacity="0.75"/></svg>
-<img src="rosyd_broch_cover.jpg" alt="ROSYD International">
-</div>
-<div class="mm-cap">ROSYD International<br>information design, 2026</div>
-</div>
-
-<div class="mm-node" data-p="2" style="left:789px;top:294px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,5 Q49,2 96,4 Q99,49 95,96 Q50,99 5,95 Q1,50 4,5 Z" fill="none" stroke="#8B3A2A" stroke-width="1.7" opacity="0.75"/></svg>
-<img src="db_wide.jpg" alt="Daily Blooms x Bondi Boost">
-</div>
-<div class="mm-cap">Daily Blooms × Bondi Boost<br>brand activation, 2025</div>
-</div>
-
-<div class="mm-node" data-p="3" style="left:705px;top:578px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M6,4 Q51,1 94,6 Q97,50 94,94 Q50,98 6,95 Q3,49 6,4 Z" fill="none" stroke="#8B3A2A" stroke-width="1.5" opacity="0.75"/></svg>
-<img src="monty_hotel.jpg" alt="The Monty Motel">
-</div>
-<div class="mm-cap">The Monty Motel<br>art direction, 2025</div>
-</div>
-
-<div class="mm-node" data-p="4" style="left:473px;top:755px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M3,6 Q48,3 95,5 Q98,51 96,93 Q49,97 4,94 Q1,49 3,6 Z" fill="none" stroke="#8B3A2A" stroke-width="1.6" opacity="0.75"/></svg>
-<img src="table_thumb.jpg" alt="A Place at Every Table">
-</div>
-<div class="mm-cap">A Place at Every Table<br>installation, 2022</div>
-</div>
-
-<div class="mm-node" data-p="5" style="left:197px;top:672px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5,3 Q50,5 97,4 Q95,50 97,95 Q51,98 5,96 Q2,50 5,3 Z" fill="none" stroke="#8B3A2A" stroke-width="1.5" opacity="0.75"/></svg>
-<img src="mars_submission_final.jpg" alt="Mars Integration Network">
-</div>
-<div class="mm-cap">Mars Integration Network<br>speculative service design, 2026</div>
-</div>
-
-<div class="mm-node" data-p="6" style="left:0px;top:452px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4,4 Q49,1 95,6 Q98,49 95,95 Q50,98 5,94 Q2,51 4,4 Z" fill="none" stroke="#8B3A2A" stroke-width="1.7" opacity="0.75"/></svg>
-<img src="library_thumbnail.jpg" alt="State Library Companion">
-</div>
-<div class="mm-cap">State Library Companion<br>service design, 2026</div>
-</div>
-
-<div class="mm-node" data-p="7" style="left:85px;top:164px;">
-<div class="mm-frame">
-<svg class="mm-deco" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M6,5 Q50,2 94,4 Q97,50 95,96 Q49,99 6,95 Q3,50 6,5 Z" fill="none" stroke="#8B3A2A" stroke-width="1.6" opacity="0.75"/></svg>
-<img src="unnoticed_poster_mockup.jpg" alt="The Unnoticed Patterns">
-</div>
-<div class="mm-cap">The Unnoticed Patterns<br>collaborative design sprint, 2026</div>
-</div>
-
-</div>
-
 </section>
 
 <!-- MODAL -->
@@ -705,60 +777,6 @@ body{cursor:auto;}
 </div>
 </div>
 </div>
-
-<!-- ARCHIVE -->
-<section id="archive">
-<div class="archive-toggle reveal" onclick="toggleArchive()">
-<h3 class="archive-h">&amp; other things</h3>
-<div class="arc-arrow-wrap"><span class="arc-arrow" id="arc-arr">›</span></div>
-</div>
-<p class="arc-hint" onclick="toggleArchive()">click to expand</p>
-<div class="arc-inner" id="arc-inner">
-<p class="arc-subtext">A collection of exploratory works and passion projects shaping the foundations of my creative process and tracing my interest in materiality.</p>
-
-<div class="arc-section">
-<div class="arc-text">
-<div class="arc-section-head">
-<span class="arc-section-title">Grandparent Gaze</span>
-<span class="arc-section-sub">2022 · observational drawing / portraiture / expressive mark-making</span>
-</div>
-<p class="arc-body">It all started by finding these photos of my grandpa and great grandmother, photos that captured an emotion I felt only I could decode. Working with charcoal, these pieces focus less on realism and more on atmosphere, intimacy and emotional presence. The works reflect my early interest in storytelling through texture, contrast and human expression, foundations that continue to shape my design practice today. Rather than treating drawing as separate from design, I approach it as a way of observing people, emotion and nuance more closely.</p>
-</div>
-<div class="arc-slider">
-<div class="arc-slide" style="width:190px;flex:0 0 190px;"><a href="port_grandmother.jpg" onclick="openLbox(event,this)"><img src="port_grandmother.jpg" alt="" style="width:190px;height:260px;object-fit:cover;display:block;background:#eee;"></a></div>
-<div class="arc-slide" style="width:190px;flex:0 0 190px;"><a href="port_grandad.jpg" onclick="openLbox(event,this)"><img src="port_grandad.jpg" alt="" style="width:190px;height:260px;object-fit:cover;display:block;background:#eee;"></a></div>
-<div class="arc-slide" style="width:190px;flex:0 0 190px;"><a href="port_grandad_process.jpg" onclick="openLbox(event,this)"><img src="port_grandad_process.jpg" alt="" style="width:190px;height:260px;object-fit:cover;display:block;background:#eee;"></a></div>
-<div class="arc-slide" style="width:190px;flex:0 0 190px;"><a href="port_process.jpg" onclick="openLbox(event,this)"><img src="port_process.jpg" alt="" style="width:190px;height:260px;object-fit:cover;display:block;background:#eee;"></a></div>
-<div class="arc-slide" style="width:190px;flex:0 0 190px;"><a href="port_final.jpg" onclick="openLbox(event,this)"><img src="port_final.jpg" alt="" style="width:190px;height:260px;object-fit:cover;display:block;background:#eee;"></a></div>
-</div>
-</div>
-
-<div class="arc-section">
-<div class="arc-text">
-<div class="arc-section-head">
-<span class="arc-section-title">Selected Photography</span>
-<span class="arc-section-sub">2026 · Photography · Visual Storytelling</span>
-</div>
-<p class="arc-body">A curated selection of photographs taken and edited over several years. I love playing with symmetry, asymmetry, finding lines that guide your eyes to unexpected places. The work explores the details, people and places that capture my attention, revealing how photography continues to inform my research, creative direction and broader design practice. Click each to view full image.</p>
-</div>
-<div class="arc-photo-grid">
-<a href="photo07.jpg" onclick="openLbox(event,this)"><img src="photo07.jpg" alt=""></a>
-<a href="photo09.jpg" onclick="openLbox(event,this)"><img src="photo09.jpg" alt=""></a>
-<a href="photo05.jpg" onclick="openLbox(event,this)"><img src="photo05.jpg" alt=""></a>
-<a href="photo06.jpg" onclick="openLbox(event,this)"><img src="photo06.jpg" alt=""></a>
-<a href="photo01.jpg" onclick="openLbox(event,this)"><img src="photo01.jpg" alt=""></a>
-<a href="photo02.jpg" onclick="openLbox(event,this)"><img src="photo02.jpg" alt=""></a>
-<a href="photo03.jpg" onclick="openLbox(event,this)"><img src="photo03.jpg" alt=""></a>
-<a href="photo04.jpg" onclick="openLbox(event,this)"><img src="photo04.jpg" alt=""></a>
-<a href="photo11.jpg" onclick="openLbox(event,this)"><img src="photo11.jpg" alt=""></a>
-<a href="photo10.jpg" onclick="openLbox(event,this)"><img src="photo10.jpg" alt=""></a>
-<a href="photo08.jpg" onclick="openLbox(event,this)"><img src="photo08.jpg" alt=""></a>
-<a href="photo12.jpg" onclick="openLbox(event,this)"><img src="photo12.jpg" alt=""></a>
-</div>
-</div>
-
-</div>
-</section>
 
 <!-- CONTACT -->
 <section id="contact">
@@ -880,54 +898,14 @@ const pdata=[
 {num:"06",lbl:"Speculative Service Design / UX Strategy / Civic Systems Design",title:"Mars Integration Network",sub:"2026 speculative service design / UX strategy / civic systems design",meta:"2026 · speculative service design",body:"<p><strong>Brief</strong>What happens when institutions stop translating lived experience into administrative value? Mars Integration Network uses speculative design to reimagine a six-step permanent residency assessment through two parallel systems of value.</p><p><strong>Insight</strong>On Earth, applicants are assessed through economic productivity and institutional classification. On Mars, contribution is measured through adaptability, collective survival and community resilience. By relocating the same procedure into a resource-dependent 'Martian' (foreign to us) settlement, the project asks how much our ideas of worth, belonging and citizenship are shaped by the environments we live in.</p><p><strong>Approach</strong>I developed the service concept from strategy through to experience, creating service journeys, blueprints, civic artefacts, environmental storyboards and UI systems. The project also strengthened my AI-assisted workflow, using prompt engineering within Figma to rapidly prototype interface concepts.</p>",note:"Project part of RMIT University \u2014 Experimental Experience Design Studio, a 12-week speculative design course exploring alternative models of permanent residency assessment (Mars-Local). Awarded High Distinction (90/100) in the studio.<br><br>To view the full Mars Integration Network walkthrough, <a href=\"https://www.emaze.com/@ALFQQQOWR/nupur---mars-walkthrough\" target=\"_blank\" rel=\"noopener\">click here</a>.",imgs:["mars_thumbnail.jpg","mars_entry.jpg","mars_classification.jpg","mars_earth_screens.jpg","mars_kiosk.jpg","mars_submission_mockup.jpg","mars_submission_final.jpg","mars_outcome.jpg","mars_support_mockup2.jpg","mars_artefact_01.jpg","mars_artefact_02.jpg"]},
 {num:"07",lbl:"Service Design · Research · Service Blueprint · Prototyping",title:"State Library Companion",sub:"2026 service design / research / service blueprint / prototyping",meta:"2026 · service design / research",body:"<p><strong>Brief</strong>How do you find your place in a space you're not familiar with? Libraries can be intimidating when you don't know where to go, what you're looking for, or whether you're even in the right place. Developed for State Library Victoria, this fictional service design project explores how personalised guidance could make navigating complex public spaces feel more intuitive and welcoming, extending beyond wayfinding to the resources and services within these environments.</p><p><strong>Approach</strong>The resulting concept creates a connective layer between people, places and information, helping visitors discover with more confidence. I led much of the initial ideation and conceptual development, as well as directing the project's photography and videography.</p><p><strong>Outcome</strong>The stills shown here are taken from our final film.</p>",note:"",imgs:["library_thumbnail.jpg","library_extra_01.jpg","library_extra_02.jpg","library_concept_01.jpg","library_concept_02.jpg","library_concept_03.jpg"]},
 {num:"08",lbl:"part of international common design studio, 2026",title:"The Unnoticed Patterns",sub:"Common Design Studio · collaborative moving image · 2026",meta:"2026 · Common Design Studio",body:"<p><strong>Scope</strong>What does a place remember that we don't? Developed through the international Common Design Studio, The Unnoticed Patterns explores home as something more complicated than a place we carry with us. Working across Australia, Vietnam, India and Spain, we looked to architecture, materials, sounds and everyday encounters to build a shared visual language around how places shape us.</p><p><strong>Approach</strong>I contributed to concept development, visual research, copywriting and narrative direction, helping shape the project's central question and overall storytelling. Alongside the collaborative work, I independently designed an editorial publication documenting the process from beginning to end, combining my own reflections with the exhibition design and final outcomes; the magazine pages shown here are my individual work.</p><p><strong>Recognition</strong>Receiving international recognition, this project was selected for Urban Digital Canvas Shanghai 2026, an international digital arts exhibition presented by the ACM SIGGRAPH Digital Arts Community, Chewing Theory and the City of Shanghai as part of the Shanghai International Light Festival. The work will be exhibited for site-specific digital screens across Shanghai's Changning District.</p>",note:"Selected for <a href=\"https://dac.siggraph.org/exhibition/2026-urban-digital-canvas-shanghai/\" target=\"_blank\" rel=\"noopener\">Urban Digital Canvas Shanghai 2026</a>. View the official Common Design Studio page for this project <a href=\"https://www.commondesignstudio.net/recipes-for-action/categories/home\" target=\"_blank\" rel=\"noopener\">here</a>.",video:"WOKBqxgsKFU",videoNote:"group work \u2014 our team's video, \"The Unnoticed Patterns\"",imgs:["unnoticed_poster_full.jpg","unnoticed_poster_mockup.jpg","unnoticed_mag01.jpg","unnoticed_mag02.jpg","unnoticed_mag03.jpg","unnoticed_mag04.jpg","unnoticed_mag05.jpg","unnoticed_mag06.jpg"]},
+{num:"09",lbl:"Art Direction, Branding, Campaign Thinking",title:"For When",sub:"2026 art direction / branding / campaign thinking",meta:"2026 · campaign / branding",body:"<p><strong>Brief / Scope</strong>For When is a personally directed fictional city-discovery brand developed as an advertising campaign. The brief I set myself was to challenge the formulaic way people discover cities through lists, ratings, \u201chidden gems\u201d and \u201cbest of\u201d searches.</p><p><strong>Approach</strong>Deadpan situational copy, my own observational photography and videography, and illustrative elements build a playful language organised around situations rather than destinations. The same idea then extends across OOH, social, physical route brochures and film, with Google Maps acting as the infrastructure that turns each \u201cwhen\u201d into somewhere to go.</p><p><strong>Insight</strong>The concept grew from my own oddly specific situations: wanting to be alone without staying home, meeting someone for the first time, or wanting to dance and sing safely with strangers. Today, algorithms only generate places before they understand why we want to go there. For When gives these everyday situations a vocabulary, a place to input the 'unsearchable thoughts', creating a guide organised around how you feel and what you need, rather than simply where to go.</p>",note:"",video:"YjI7LBCZjRI",videoNote:"For When — campaign film",imgs:["1790068969516_for_when_deck_of_images.png","1790068969516_for_when_deck_of_images2.png","1790068969517_for_when_deck_of_images3.png","1790068969517_for_when_deck_of_images4.png","1790068969517_for_when_deck_of_images5.png","1790068969517_for_when_deck_of_images6.png","1790068969517_for_when_deck_of_images7.png","1790068969518_for_when_deck_of_images8.png","1790068969518_for_when_deck_of_images9.png","1790068969518_for_when_deck_of_images10.png","1790068969518_for_when_deck_of_images11.png","1790068969519_for_when_deck_of_images12.png","1790068969519_for_when_deck_of_images13.png","1790068969519_for_when_deck_of_images_thumbnail.png","1790068969519_for_when_deck_of_images15.png","1790068969519_for_when_deck_of_images16.png","1790068969520_for_when_deck_of_images17.png","1790068969520_for_when_deck_of_images18.png","1790068969520_for_when_deck_of_images19.png","1790068969520_for_when_deck_of_images20.png"]},
+{num:"10",lbl:"Observational Illustration / Portraiture",title:"Grandparent Gaze",sub:"2022 observational illustration / portraiture",meta:"2022 · portraiture",body:"<p><strong>Brief / Scope</strong>It started with finding photographs of my grandpa and great grandmother, photographs that captured an emotion I felt only I could decode.</p><p><strong>Approach</strong>Working with charcoal, I focused less on realism and more on atmosphere, intimacy and emotional presence.</p><p><strong>Insight</strong>The project became a way of looking more closely at people, emotion and nuance. Texture, contrast and human expression build my storytelling approach, which still shapes my design practice today.</p>",note:"",imgs:["port_grandmother.jpg","port_grandad.jpg","port_grandad_process.jpg","port_process.jpg","port_final.jpg"]},
+{num:"11",lbl:"Photography / Visual Storytelling",title:"Selected Photography",sub:"2026 photography / visual storytelling",meta:"2026 · photography",body:"<p><strong>Brief / Scope</strong>A collection of photographs taken and edited over several years, brought together around the details, people and places that catch my attention.</p><p><strong>Approach</strong>I love playing with symmetry, asymmetry and finding lines that guide your eye somewhere unexpected.</p><p><strong>Insight</strong>The photographs reflect the way I naturally observe the world, and continue to inform how I research, find visual stories and approach creative direction.</p>",note:"",imgs:["photo01.jpg","photo02.jpg","photo03.jpg","photo04.jpg","photo05.jpg","photo06.jpg","photo07.jpg","photo08.jpg","photo09.jpg","photo10.jpg","photo11.jpg","photo12.jpg"]},
 ];
 
-document.querySelectorAll('.mm-node').forEach(node=>{
-node.addEventListener('click',()=>openModal(parseInt(node.dataset.p)));
+document.querySelectorAll('.work-card').forEach(card=>{
+card.addEventListener('click',()=>openModal(parseInt(card.dataset.p)));
 });
-
-function drawConnectors(){
-const mm=document.getElementById('mindmap');
-if(!mm||window.innerWidth<=900)return;
-const svg=document.getElementById('connSvg');
-const nodes=[...mm.querySelectorAll('.mm-node')];
-const centreWrap=document.getElementById('centreWrap');
-const mmRect=mm.getBoundingClientRect();
-const cRect=centreWrap.getBoundingClientRect();
-const cx=cRect.left-mmRect.left+cRect.width/2;
-const cy=cRect.top-mmRect.top+cRect.height/2;
-let paths='';
-nodes.forEach(n=>{
-const r=n.getBoundingClientRect();
-const nx=r.left-mmRect.left+r.width/2;
-const ny=r.top-mmRect.top+r.height/2;
-const dx=nx-cx,dy=ny-cy;
-const dist=Math.sqrt(dx*dx+dy*dy)||1;
-const startR=100;
-const sx=cx+(dx/dist)*startR;
-const sy=cy+(dy/dist)*startR;
-const midx=(sx+nx)/2+(dy/dist)*18;
-const midy=(sy+ny)/2-(dx/dist)*18;
-paths+=`<path d="M${sx},${sy} Q${midx},${midy} ${nx},${ny}" stroke="#8B3A2A" stroke-width="1.6" fill="none" opacity="0.65" stroke-linecap="round"/>`;
-});
-svg.innerHTML=paths;
-}
-window.addEventListener('load',drawConnectors);
-window.addEventListener('resize',drawConnectors);
-
-function initStripScrollHint(strip){
-if(strip.dataset.hintBound)return;
-strip.dataset.hintBound='1';
-const wrap=strip.closest('.pe-strip-wrap');
-const hint=wrap?wrap.previousElementSibling:null;
-function update(){
-const atEnd=strip.scrollLeft+strip.clientWidth>=strip.scrollWidth-10;
-if(wrap)wrap.style.setProperty('--fade-opacity',atEnd?'0':'1');
-if(hint&&hint.classList.contains('pe-scroll-hint'))hint.style.opacity=atEnd?'0':'1';
-}
-strip.addEventListener('scroll',update,{passive:true});
-update();
-}
 
 /* ──────────────────────────────────────────────────────────
    NAVIGATION HISTORY
@@ -935,7 +913,7 @@ update();
    entry. Browser back button, trackpad two-finger swipe-back,
    mobile edge-swipe-back, and the Escape key all resolve through
    the same handler, closing the modal and returning to the
-   Selected Works mind-map, exactly like flicking through a
+   Selected Works grid, exactly like flicking through a
    native app between projects.
    ────────────────────────────────────────────────────────── */
 let modalOpen=false;
@@ -954,22 +932,13 @@ document.getElementById('mnote').style.display=p.note?'block':'none';
 const mi=document.getElementById('mimgs');
 let html='';
 if(p.video){
-html+=`<p class="m-scroll-hint" style="margin-bottom:.5rem;">${p.videoNote||'group work'}</p>`;
 html+=`<div class="m-video"><iframe src="https://www.youtube.com/embed/${p.video}" title="${p.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 }
+// All images shown at once in a 2-col masonry grid — vertically scrollable
+// with the rest of the page, nothing to click through to see the rest.
 const imgs=p.imgs||[];
-if(imgs.length){
-html+=`<a class="m-hero" href="${imgs[0]}" onclick="openLbox(event,this)"><img src="${imgs[0]}" alt=""></a>`;
-if(imgs.length>1){
-html+=`<div class="m-scroll-hint"><span>click or scroll to see more</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>`;
-html+=`<div class="m-strip-wrap"><div class="m-strip">`;
-html+=imgs.slice(1).map(s=>`<a href="${s}" onclick="openLbox(event,this)"><img src="${s}" alt=""></a>`).join('');
-html+=`</div></div>`;
-}
-}
+html+=imgs.map(s=>`<a href="${s}" onclick="openLbox(event,this)"><img src="${s}" alt=""></a>`).join('');
 mi.innerHTML=html;
-const strip=mi.querySelector('.m-strip');
-if(strip)initStripScrollHint(strip);
 modal.classList.add('open');
 window.scrollTo(0,0);
 document.body.style.overflow='hidden';
@@ -1053,10 +1022,6 @@ const b=document.getElementById('about-more-btn');
 const isOpen=m.classList.toggle('open');
 b.classList.toggle('open',isOpen);
 b.childNodes[0].textContent=isOpen?'show less ':'continue reading ';
-}
-function toggleArchive(){
-document.getElementById('arc-inner').classList.toggle('open');
-document.getElementById('arc-arr').classList.toggle('open');
 }
 </script>
 </body>
