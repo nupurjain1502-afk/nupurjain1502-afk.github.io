@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nupur Jain Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,700&family=Mansalva&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#F2F0EB;
+--black:#0E0E0E;
+--acc:#8B3A2A;
+--grey:#999;
+--lgrey:#D8D5CF;
+--warm:#EDEAE3;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--black);font-family:'Cormorant Garamond',serif;font-weight:400;cursor:none;overflow-x:hidden;}
+/* ── CURSOR ── */
+#cur{position:fixed;width:20px;height:20px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity .2s,background-color .2s,width .2s,height .2s;
+background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M15 2 L17.5 11.5 L27 12 L18.5 17 L21 27 L15 20.5 L9 27 L11.5 17 L3 12 L12.5 11.5 Z" fill="%23000000" stroke="%23000000" stroke-width="1" stroke-linejoin="round"/></svg>');
+background-size:20px 20px;background-repeat:no-repeat;background-position:center;border-radius:50%;}
+#cur.big{background-color:rgba(139,58,42,.18);width:38px;height:38px;}
+#cur.onname{background-color:rgba(139,58,42,.18);width:38px;height:38px;}
+/* Cursor fail-safe + touch handling is done in JS: fades out if mouse stops moving,
+   and is fully disabled on touch devices (see JS block + media query below). */
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;transition:background .3s,box-shadow .3s;}
+nav.scrolled{background:var(--bg);box-shadow:0 1px 0 var(--lgrey);}
+.nav-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);text-decoration:none;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:1rem;color:var(--black);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--acc);}
+/* ── HERO ── */
+#hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:relative;
+overflow:hidden;
+padding:6rem 3rem 4rem;
+}
+/* subtle grain texture on hero */
+#hero::before{
+content:'';
+position:absolute;
+inset:0;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+opacity:.4;
+pointer-events:none;
+z-index:0;
+}
+/* decorative elements */
+.hero-deco-tl{position:absolute;top:5.5rem;left:3rem;text-align:left;z-index:1;}
+.hero-deco-tl .lbl{font-size:.55rem;letter-spacing:.14em;text-transform:lowercase;color:var(--grey);display:block;margin-bottom:.1rem;}
+.hero-deco-tl .val{font-family:'Mansalva',cursive;font-size:.9rem;color:#888;}
+/* BIG CENTRED NAME */
+.hero-name{
+font-family:'Poppins',sans-serif;
+font-weight:700;
+font-size:clamp(4.6rem,15.5vw,14.5rem);
+line-height:.85;
+text-transform:uppercase;
+letter-spacing:-.025em;
+color:var(--black);
+position:relative;
+z-index:2;
+transition:color .4s ease;
+cursor:none;
+opacity:0;
+transform:translateY(50px);
+animation:up 1s cubic-bezier(.16,1,.3,1) .2s forwards;
+}
+.hero-name:hover{color:var(--acc);}
+/* ethos line */
+.hero-ethos{
+font-family:'Cormorant Garamond',serif;
+font-style:normal;
+font-size:clamp(1rem,2.2vw,1.8rem);
+color:var(--acc);
+margin-top:1.2rem;
+letter-spacing:.01em;
+position:relative;
+z-index:2;
+opacity:0;
+animation:up 1s cubic-bezier(.16,1,.3,1) .5s forwards;
+}
+/* descriptor */
+.hero-descriptor{
+font-family:'Mansalva',cursive;
+font-size:clamp(.75rem,1.2vw,1rem);
+color:var(--grey);
+margin-top:.6rem;
+letter-spacing:.04em;
+position:relative;
+z-index:2;
+opacity:0;
+animation:fadeIn 1s ease 1s forwards;
+}
+/* vertical scroll line */
+.hero-scroll{
+position:absolute;
+bottom:2.5rem;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:.5rem;
+z-index:2;
+opacity:0;
+animation:fadeIn 1s ease 1.5s forwards;
+}
+.hero-scroll span{font-family:'Mansalva',cursive;font-size:.7rem;color:var(--grey);}
+.scroll-arrow{width:22px;height:22px;color:var(--acc);animation:scrollBob 1.8s ease-in-out infinite;}
+@keyframes scrollBob{0%,100%{transform:translateY(-2px);opacity:.45;}50%{transform:translateY(4px);opacity:1;}}
+@media (max-height:720px){.hero-scroll{display:none;}}
+@keyframes up{from{opacity:0;transform:translateY(50px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{to{opacity:1;}}
+/* ── THOUGHT STRIP ── */
+.strip{padding:.85rem 3rem;border-top:1px solid rgba(0,0,0,.09);border-bottom:1px solid rgba(0,0,0,.09);display:flex;align-items:center;gap:1.2rem;overflow:hidden;}
+.strip-lbl{font-size:.55rem;letter-spacing:.14em;text-transform:lowercase;color:var(--grey);white-space:nowrap;}
+.strip-dot{width:4px;height:4px;background:var(--acc);border-radius:50%;flex-shrink:0;}
+.strip-txt{font-family:'Mansalva',cursive;font-size:.95rem;color:var(--black);transition:opacity .5s,transform .5s;}
+.strip-txt.hide{opacity:0;transform:translateY(5px);}
+/* ── ABOUT accent background ── */
+#about{padding:0;background:var(--bg);}
+.about-accent-bar{
+background:var(--acc);
+padding:4rem 3rem;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:4rem;
+align-items:center;
+position:relative;
+}
+.about-accent-bar::before{
+content:'';
+position:absolute;
+top:4rem;
+bottom:4rem;
+left:50%;
+width:2px;
+background:rgba(242,240,235,.3);
+}
+.about-accent-bar>div:first-child{min-width:0;}
+.about-accent-bar>div:last-child{min-width:0;}
+.about-accent-heading{
+font-family:'Poppins',sans-serif;
+font-weight:700;
+font-size:clamp(1.8rem,4vw,4rem);
+line-height:.9;
+text-transform:uppercase;
+color:var(--bg);
+letter-spacing:-.01em;
+}
+.about-accent-heading em{font-style:normal;color:rgba(242,240,235,.5);}
+.about-accent-quote{
+font-family:'Cormorant Garamond',serif;
+font-style:normal;
+font-size:clamp(1rem,1.8vw,1.5rem);
+color:rgba(242,240,235,.8);
+line-height:1.65;
+padding-left:1.2rem;
+}
+.about-body-section{
+padding:4rem 3rem;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:4rem;
+align-items:stretch;
+position:relative;
+}
+.about-body-section::before{
+content:'';
+position:absolute;
+top:4rem;
+bottom:4rem;
+left:50%;
+width:1px;
+background:var(--lgrey);
+}
+.about-body-section>*{min-width:0;}
+.about-body-section .about-body{max-width:520px;}
+.slbl{font-size:.55rem;letter-spacing:.16em;text-transform:lowercase;color:var(--grey);margin-bottom:.9rem;}
+.about-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:.92;text-transform:uppercase;margin-bottom:.8rem;letter-spacing:-.01em;}
+.about-h em{font-style:normal;color:var(--acc);}
+.about-intro{font-family:'Mansalva',cursive;font-size:1.05rem;color:var(--black);margin-bottom:1.1rem;line-height:1.6;}
+.about-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:#585858;max-width:460px;}
+.about-body p+p{margin-top:.85rem;}
+.about-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .55s cubic-bezier(.16,1,.3,1),opacity .45s ease;margin-top:0;}
+.about-more>*{overflow:hidden;min-height:0;}
+.about-more.open{grid-template-rows:1fr;opacity:1;margin-top:.85rem;}
+.about-more.open>p{overflow:visible;}
+.about-more-btn{margin:0 0 .35rem;font-family:'Mansalva',cursive;font-size:1.5rem;color:var(--acc);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.4rem 0;order:-1;}
+.about-hook{font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.7;color:#3a3a3a;margin-bottom:.5rem;}
+.about-more-btn:hover{opacity:.7;}
+.about-more-btn #about-more-arr{transition:transform .3s ease;display:inline-block;}
+.about-more-btn.open #about-more-arr{transform:rotate(180deg);}
+.about-r{padding-top:0;display:flex;flex-direction:column;gap:1.8rem;height:100%;}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.tag{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;border:1px solid var(--lgrey);padding:.18rem .78rem;border-radius:100px;color:#888;cursor:default;}
+/* ── PROJECTS ── */
+#projects{padding:3rem 0 3.5rem;background:var(--bg);}
+.proj-top{padding:1.6rem 3rem;border-top:1px solid var(--lgrey);display:flex;justify-content:space-between;align-items:center;}
+.proj-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.5vw,3rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;}
+.view-toggle{display:flex;gap:.4rem;}
+.vbtn{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.9rem;padding:.28rem .8rem;border:1px solid var(--lgrey);border-radius:100px;background:none;color:#999;cursor:none;transition:all .2s;}
+.vbtn.active{background:var(--black);color:var(--bg);border-color:var(--black);}
+/* LIST */
+.prow{display:grid;grid-template-columns:44px 1fr auto;align-items:start;gap:1.6rem;padding:1.3rem 3rem;border-bottom:1px solid var(--lgrey);position:relative;overflow:hidden;cursor:none;transition:padding-left .3s;}
+.prow-num{padding-top:.2rem;}
+.prow-meta{text-align:right;padding-top:.2rem;}
+.prow::before{content:'';position:absolute;inset:0;background:var(--black);transform:translateX(-100%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:0;}
+.prow:hover::before,.prow.active::before{transform:translateX(0);}
+.prow:hover,.prow.active{padding-left:1.5rem;}
+.prow>*{position:relative;z-index:1;}
+.prow-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:.75rem;color:var(--acc);letter-spacing:.02em;transition:color .3s;}
+.prow-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(.9rem,1.8vw,1.4rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;transition:color .3s;}
+.prow:hover .prow-title,.prow.active .prow-title{color:var(--bg);}
+.prow-sub{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;color:var(--grey);margin-top:.1rem;transition:color .3s;}
+.prow:hover .prow-sub,.prow.active .prow-sub{color:rgba(242,240,235,.45);}
+.prow-year{font-family:'Cormorant Garamond',serif;font-size:.7rem;color:var(--grey);display:block;transition:color .3s;}
+.prow:hover .prow-year,.prow.active .prow-year{color:rgba(242,240,235,.35);}
+.prow-type{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.75rem;color:#999;transition:color .3s;}
+.prow:hover .prow-type,.prow.active .prow-type{color:rgba(242,240,235,.35);}
+.prow-arr{opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;font-size:.9rem;color:var(--bg);}
+.prow:hover .prow-arr,.prow.active .prow-arr{opacity:1;transform:translateX(0);}
+/* EXPAND */
+.proj-expand{display:none;padding:1.8rem 3rem 2.2rem calc(3rem + 44px + 1.6rem);border-bottom:1px solid var(--lgrey);}
+.proj-expand.open{display:grid;grid-template-columns:1fr 1fr;gap:2rem;animation:expandIn .3s ease;}
+@keyframes expandIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.pe-label{font-size:.52rem;letter-spacing:.15em;text-transform:lowercase;color:var(--grey);margin-bottom:.3rem;}
+.pe-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.15rem;text-transform:uppercase;line-height:1;margin-bottom:.3rem;letter-spacing:-.01em;}
+.pe-sub{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.88rem;color:var(--acc);margin-bottom:.85rem;}
+.pe-body{font-family:'Cormorant Garamond',serif;font-size:.85rem;line-height:1.85;color:#505050;}
+.pe-note{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.78rem;line-height:1.7;color:var(--grey);margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--lgrey);}
+.pe-imgs{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.pe-imgs a{display:block;cursor:zoom-in;}
+.pe-imgs img{width:100%;display:block;object-fit:cover;aspect-ratio:4/3;background:#eee;transition:opacity .2s;}
+.pe-imgs img:hover{opacity:.85;}
+/* CAROUSEL (used for image-heavy projects) */
+.pe-carousel{display:flex;flex-direction:column;gap:.6rem;}
+.pe-hero-img{display:block;cursor:zoom-in;position:relative;}
+.pe-hero-img img{width:100%;display:block;object-fit:cover;aspect-ratio:4/3;background:#eee;transition:opacity .2s;}
+.pe-hero-img:hover img{opacity:.9;}
+.pe-strip-wrap{position:relative;}
+.pe-strip{display:flex;gap:.4rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:.3rem;}
+.pe-strip::-webkit-scrollbar{height:4px;}
+.pe-strip::-webkit-scrollbar-thumb{background:var(--lgrey);border-radius:10px;}
+.pe-strip a{flex:0 0 31%;scroll-snap-align:start;cursor:zoom-in;display:block;}
+.pe-strip img{width:100%;display:block;object-fit:cover;aspect-ratio:4/3;background:#eee;transition:opacity .2s;}
+.pe-strip a:hover img{opacity:.85;}
+.pe-strip-wrap::after{
+content:'';
+position:absolute;
+top:0;bottom:.3rem;right:0;
+width:36px;
+background:linear-gradient(to right, rgba(242,240,235,0), var(--bg));
+pointer-events:none;
+opacity:var(--fade-opacity,1);
+transition:opacity .3s;
+}
+.pe-scroll-hint{transition:opacity .3s;}
+.pe-scroll-hint{display:flex;align-items:center;gap:.4rem;font-family:'Mansalva',cursive;font-size:.72rem;color:var(--acc);}
+.pe-scroll-hint svg{width:13px;height:13px;animation:nudgeRight 1.4s ease-in-out infinite;}
+@keyframes nudgeRight{0%,100%{transform:translateX(0);}50%{transform:translateX(4px);}}
+/* ── SELECTED WORKS GRID (asymmetric, editorial) ── */
+.work-grid{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:1.4rem;
+padding:0 3rem;
+max-width:1400px;
+margin:0 auto;
+box-sizing:border-box;
+}
+.work-card{
+position:relative;
+cursor:none;
+grid-column:span 3;
+}
+.work-card.size-lg{grid-column:span 3;}
+.work-card.size-sm{grid-column:span 2;}
+.work-frame{
+position:relative;
+transition:transform .3s ease;
+}
+.work-card:hover .work-frame{transform:translateY(-4px);}
+.work-frame img{
+width:100%;
+aspect-ratio:4/3;
+object-fit:cover;
+display:block;
+background:var(--lgrey);
+}
+.work-cap{
+display:flex;
+justify-content:space-between;
+align-items:baseline;
+margin-top:.7rem;
+gap:.6rem;
+}
+.work-cap-title{
+font-family:'Poppins',sans-serif;
+font-weight:700;
+font-size:.92rem;
+text-transform:uppercase;
+letter-spacing:-.01em;
+line-height:1.15;
+}
+.work-cap-meta{
+font-family:'Cormorant Garamond',serif;
+font-style:normal;
+font-size:.78rem;
+color:var(--grey);
+white-space:nowrap;
+flex-shrink:0;
+}
+.work-card.archive .work-frame{opacity:.9;}
+.work-card.archive .work-cap-title{color:#4a4a4a;}
+@media (max-width:700px){
+.work-grid{grid-template-columns:1fr;padding:0 1.5rem;gap:2rem;}
+.work-card{grid-column:span 1!important;}
+}
+/* section divider using accent colour, per director's note on using vertical space clearly */
+.section-divider{
+padding:3.2rem 3rem 2rem;
+max-width:1400px;
+margin:0 auto;
+border-top:1px solid rgba(139,58,42,.28);
+}
+.section-divider-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;}
+@media (max-width:700px){.section-divider{padding:2.4rem 1.5rem 1.6rem;}}
+#canvas-view{display:none;position:relative;width:100%;height:760px;overflow:hidden;background:var(--bg);border:1px solid rgba(139,58,42,.12);border-radius:14px;}
+.canvas-centre{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;pointer-events:none;width:200px;}
+.canvas-ring{width:188px;height:188px;border:1px dashed rgba(139,58,42,.3);border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;animation:spinSlow 30s linear infinite;}
+@keyframes spinSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.canvas-ring-inner{width:130px;height:130px;border:1px solid rgba(139,58,42,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:spinSlow 30s linear infinite reverse;}
+.canvas-centre-text{font-family:'Mansalva',cursive;font-size:.75rem;color:#aaa;line-height:1.6;padding:0 .5rem;}
+.card{position:absolute;width:195px;background:#fff;box-shadow:3px 4px 16px rgba(0,0,0,.1);user-select:none;cursor:none;transition:box-shadow .2s;touch-action:none;}
+.card:hover{box-shadow:5px 7px 22px rgba(0,0,0,.16);z-index:50;}
+.card.drag{z-index:100;cursor:none;box-shadow:7px 11px 30px rgba(0,0,0,.22);}
+.card.at-edge{outline:1.6px solid rgba(139,58,42,.6);outline-offset:1px;}
+.tape{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:40px;height:16px;background:rgba(139,58,42,.18);border-radius:2px;z-index:2;}
+.tape2{position:absolute;top:-7px;left:10px;transform:rotate(-10deg);width:30px;height:13px;background:rgba(139,58,42,.14);border-radius:2px;z-index:2;}
+.tape3{position:absolute;top:-5px;right:12px;transform:rotate(7deg);width:26px;height:12px;background:rgba(180,175,165,.28);border-radius:2px;z-index:2;}
+.clip{position:absolute;top:-15px;right:9px;z-index:3;opacity:.45;}
+.card img{width:100%;height:130px;object-fit:cover;display:block;background:var(--lgrey);}
+.card-body{padding:6px 8px 10px;}
+.card-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:.62rem;color:var(--acc);margin-bottom:1px;letter-spacing:.02em;}
+.card-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:.65rem;text-transform:uppercase;line-height:1.2;margin-bottom:1px;letter-spacing:.01em;}
+.card-desc{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.72rem;color:#888;line-height:1.3;}
+.cv-hint{position:absolute;bottom:.7rem;right:1rem;font-family:'Mansalva',cursive;font-size:.68rem;color:var(--grey);pointer-events:none;}
+/* MODAL - full page project view */
+.modal-ov{position:fixed;inset:0;background:var(--bg);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto;}
+.modal-ov.open{opacity:1;pointer-events:all;}
+.mbox{max-width:none;width:100%;min-height:100vh;padding:0;position:relative;}
+.m-header{background:#161412;color:var(--bg);padding:1.4rem 3rem;display:flex;align-items:baseline;gap:1.6rem;}
+.m-header-mid{flex:1;}
+.m-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.3rem,3vw,1.9rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;}
+.m-lbl{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.85rem;color:rgba(242,240,235,.6);margin-top:.25rem;}
+.m-header-meta{text-align:right;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;color:rgba(242,240,235,.75);white-space:nowrap;}
+.mclose{flex:0 0 auto;font-family:'Mansalva',cursive;font-size:1.05rem;color:rgba(242,240,235,.75);cursor:none;background:none;border:none;z-index:2;white-space:nowrap;padding:.55rem .8rem;display:flex;align-items:center;gap:.35rem;}
+.mclose:hover{color:var(--bg);}
+.m-body-wrap{padding:2.8rem 3rem 4rem;display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:3.5rem;align-items:start;}
+.m-sub{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.88rem;color:var(--acc);margin-bottom:1.1rem;display:block;}
+.m-text{position:sticky;top:2.8rem;}
+.m-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.9;color:#3a3a3a;}
+.m-body p{margin-bottom:1.15rem;}
+.m-body p:last-child{margin-bottom:0;}
+.m-body strong{font-family:'Poppins',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);display:block;margin-top:.3rem;margin-bottom:.5rem;}
+.m-body em{font-style:normal;font-family:'Cormorant Garamond',serif;color:#3a3a3a;}
+.m-note{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.9rem;line-height:1.75;color:var(--grey);margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--lgrey);}
+.m-note a{color:var(--acc);text-decoration:underline;}
+/* full 2-col image grid: all images visible at once, vertically scrollable with the page.
+   Uses CSS Grid (not column-count) so layout is stable immediately and doesn't reflow/shuffle
+   as each image finishes loading — every image gets a reserved aspect-ratio box up front. */
+.m-imgs{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;align-items:start;}
+.m-imgs>a{display:block;cursor:zoom-in;}
+.m-imgs img{width:100%;aspect-ratio:4/3;display:block;object-fit:cover;background:#eee;transition:opacity .2s;}
+.m-imgs a:hover img{opacity:.9;}
+.m-video{position:relative;width:100%;aspect-ratio:9/16;max-width:340px;background:#000;margin-bottom:.9rem;}
+.m-video iframe{position:absolute;inset:0;width:100%;height:100%;}
+@media (max-width:900px){
+.m-body-wrap{grid-template-columns:1fr;}
+.m-text{position:static;}
+.m-imgs{grid-template-columns:1fr;}
+}
+@media (max-width:900px){
+.m-header{padding:1.2rem 1.5rem;flex-wrap:wrap;}
+.m-body-wrap{grid-template-columns:1fr;padding:2rem 1.5rem 3rem;gap:2rem;}
+}
+.lbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.lbox.open{opacity:1;pointer-events:all;}
+.lbox img{max-width:90vw;max-height:90vh;object-fit:contain;display:block;}
+.lbox-close{position:absolute;top:1.2rem;right:1.2rem;color:rgba(255,255,255,.75);font-family:'Mansalva',cursive;font-size:1.05rem;cursor:pointer;background:none;border:none;padding:.55rem .8rem;}
+.lbox-close:hover{color:#fff;}
+.lbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.25);width:46px;height:46px;border-radius:50%;font-size:1.6rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s;}
+.lbox-nav:hover{background:rgba(255,255,255,.2);}
+.lbox-nav:disabled{opacity:0;pointer-events:none;}
+.lbox-prev{left:1.2rem;}
+.lbox-next{right:1.2rem;}
+.lbox-counter{position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.6);font-family:'Mansalva',cursive;font-size:.8rem;}
+@media(max-width:700px){
+.lbox-nav{width:38px;height:38px;font-size:1.3rem;}
+.lbox-prev{left:.5rem;}
+.lbox-next{right:.5rem;}
+}
+/* ARCHIVE */
+#archive{padding:3rem 3rem 4.5rem;border-top:1px solid var(--lgrey);}
+.archive-toggle{display:flex;align-items:center;gap:.9rem;cursor:none;padding:.3rem 0;}
+.archive-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.5vw,3rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--black);transition:color .2s;}
+.archive-toggle:hover .archive-h{color:var(--acc);}
+.arc-arrow-wrap{display:flex;flex-direction:column;align-items:center;}
+.arc-arrow{font-size:1.7rem;color:var(--acc);transition:transform .3s;line-height:1;}
+.arc-arrow.open{transform:rotate(90deg);}
+.arc-hint{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.88rem;color:var(--grey);margin-top:.5rem;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--lgrey);cursor:none;}
+.archive-toggle:hover ~ .arc-hint,.arc-hint:hover{color:var(--acc);text-decoration-color:var(--acc);}
+.arc-inner{display:none;margin-top:1.5rem;}
+.arc-inner.open{display:block;}
+.arc-subtext{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.85rem;color:var(--grey);margin-bottom:2rem;max-width:520px;}
+.arc-section{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:2.6rem;align-items:start;margin-bottom:3rem;}
+.arc-text{align-self:start;}
+.arc-section-head{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.8rem;}
+.arc-section-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.1rem,2vw,1.6rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--black);}
+.arc-section-sub{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.82rem;color:var(--acc);}
+.arc-body{font-family:'Cormorant Garamond',serif;font-size:.82rem;line-height:1.8;color:#666;max-width:none;margin-bottom:0;}
+.arc-slider{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.6rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;align-items:flex-end;}
+.arc-photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;max-width:789px;}
+.arc-photo-grid a{display:block;cursor:zoom-in;}
+.arc-photo-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#eee;transition:opacity .2s;}
+.arc-photo-grid a:hover img{opacity:.85;}
+@media (max-width:700px){
+.arc-photo-grid{grid-template-columns:repeat(2,1fr);}
+}
+.arc-slider::-webkit-scrollbar{height:3px;}
+.arc-slider::-webkit-scrollbar-thumb{background:var(--lgrey);}
+.arc-slide{flex:0 0 auto;scroll-snap-align:start;cursor:zoom-in;}
+.arc-slide a{display:block;}
+.arc-slide img{width:100%;display:block;object-fit:cover;background:#eee;transition:opacity .2s;}
+.arc-slide img:hover{opacity:.85;}
+/* CONTACT */
+#contact{background:var(--acc);}
+.contact-inner{padding:5rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(2.5rem,6vw,6rem);text-transform:uppercase;line-height:.9;color:var(--bg);letter-spacing:-.01em;}
+.contact-h em{font-style:normal;display:block;color:var(--black);}
+.c-hand{font-family:'Mansalva',cursive;font-size:1rem;color:rgba(242,240,235,.8);margin-bottom:1.6rem;line-height:1.6;}
+.c-email{display:inline-block;font-family:'Poppins',sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;color:var(--bg);text-decoration:none;border-bottom:2px solid rgba(242,240,235,.4);padding-bottom:.15rem;transition:border-color .2s;}
+.c-email:hover{border-color:var(--bg);}
+.socials{display:flex;gap:1.6rem;margin-top:1.3rem;}
+.socials a{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.95rem;color:rgba(242,240,235,.7);text-decoration:none;transition:color .2s;}
+.socials a:hover{color:var(--bg);}
+/* FOOTER */
+footer{padding:1.3rem 3rem;border-top:1px solid var(--lgrey);display:flex;justify-content:space-between;align-items:center;}
+footer p{font-family:'Cormorant Garamond',serif;font-style:normal;font-size:.95rem;color:#4a4a4a;}
+.fn{font-family:'Poppins',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+@media(max-width:900px){
+nav{padding:1rem 1.5rem;}
+#hero{padding:5rem 1.5rem 3rem;}
+.strip,#archive,footer{padding-left:1.5rem;padding-right:1.5rem;}
+.about-accent-bar{padding:3rem 1.5rem;grid-template-columns:1fr;}
+.about-accent-bar::before{display:none;}
+.about-body-section{padding:3rem 1.5rem;grid-template-columns:1fr;gap:2.5rem;}
+.about-body-section::before{display:none;}
+.about-body{max-width:100%!important;}
+.proj-top,.prow,.proj-expand{padding-left:1.5rem;padding-right:1.5rem;}
+.contact-inner{padding:3.5rem 1.5rem;grid-template-columns:1fr;gap:2.5rem;}
+.proj-expand.open{grid-template-columns:1fr;}
+.arc-section{grid-template-columns:1fr;gap:1.1rem;}
+.pe-strip a{flex:0 0 42%;}
+footer{flex-direction:column;gap:.35rem;}
+}
+/* ── PAPER TEXTURE OVERLAY ── */
+#grain{
+position:fixed;inset:-40px;pointer-events:none;z-index:400;
+opacity:.6;
+mix-blend-mode:multiply;
+background-image:url("paper.jpg");
+background-size:680px 680px;
+background-repeat:repeat;
+animation:paperDrift 26s ease-in-out infinite;
+will-change:transform;
+}
+#grain::after{
+content:'';
+position:absolute;inset:0;
+background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(20,15,10,.16) 100%);
+mix-blend-mode:multiply;
+}
+@keyframes paperDrift{
+0%{transform:translate(0,0);}
+33%{transform:translate(-14px,-9px);}
+66%{transform:translate(10px,-13px);}
+100%{transform:translate(0,0);}
+}
+/* ── CURSOR LABEL ── */
+#curlabel{
+position:fixed;top:0;left:0;pointer-events:none;z-index:9998;
+font-family:'Mansalva',cursive;font-size:.72rem;color:var(--acc);
+transform:translate(16px,14px);opacity:0;transition:opacity .2s;white-space:nowrap;
+}
+#curlabel.show{opacity:.85;}
+/* ── COVER PHOTO (about) ── */
+.about-photo{
+position:relative;align-self:stretch;width:clamp(190px,46%,300px);margin-top:.4rem;display:flex;flex:1;
+}
+.about-photo img{
+width:100%;height:100%;display:block;object-fit:cover;
+box-shadow:10px 14px 30px rgba(30,20,12,.32), 3px 5px 10px rgba(30,20,12,.22), 0 1px 0 rgba(0,0,0,.08);
+}
+.about-photo::before{
+content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);
+width:64px;height:22px;background:rgba(237,234,227,.85);
+box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.04);z-index:2;
+}
+.c-hand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;}
+.c-hand-col{flex:1;min-width:0;}
+.contact-photo{
+position:relative;width:230px;flex:0 0 230px;aspect-ratio:1/1;margin:0;
+}
+.contact-photo img{
+width:100%;height:100%;display:block;object-fit:cover;
+box-shadow:10px 14px 28px rgba(0,0,0,.35), 3px 5px 10px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.08);
+}
+.contact-photo::before{
+content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);
+width:60px;height:22px;background:rgba(242,240,235,.85);
+box-shadow:0 1px 3px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.04);z-index:2;
+}
+@media (max-width:900px){
+.about-photo{align-self:flex-start;width:64%;max-width:260px;}
+.c-hand-row{flex-direction:column-reverse;align-items:flex-start;gap:1rem;}
+.contact-photo{width:120px;flex:0 0 120px;}
+}
+/* ── IMAGE REVEAL ON EXPAND (clean fade-up) ── */
+.proj-expand.open .pe-hero-img,
+.proj-expand.open .pe-imgs>a,
+.proj-expand.open .pe-imgs>div,
+.proj-expand.open .pe-strip>a{
+animation:imgIn .55s cubic-bezier(.16,1,.3,1) both;
+}
+.proj-expand.open .pe-imgs>a:nth-child(2),.proj-expand.open .pe-strip>a:nth-child(2){animation-delay:.05s;}
+.proj-expand.open .pe-imgs>a:nth-child(3),.proj-expand.open .pe-strip>a:nth-child(3){animation-delay:.1s;}
+.proj-expand.open .pe-imgs>a:nth-child(4),.proj-expand.open .pe-strip>a:nth-child(4){animation-delay:.15s;}
+@keyframes imgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+/* ── TOUCH / NO-HOVER: restore native cursor, hide custom ── */
+@media (hover:none),(pointer:coarse){
+body{cursor:auto;}
+#cur,#curlabel{display:none!important;}
+.hero-name,.tag,.vbtn,.prow,.card,.archive-toggle,.mclose,.lbox-close,.arc-hint{cursor:auto;}
+}
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="curlabel"></div>
+<div id="grain"></div>
+<div class="lbox" id="lbox">
+<button class="lbox-close" onclick="closeLbox()">✕ close</button>
+<button class="lbox-nav lbox-prev" id="lbox-prev" onclick="lboxStep(-1)" aria-label="Previous image">‹</button>
+<img id="lbox-img" src="" alt="">
+<button class="lbox-nav lbox-next" id="lbox-next" onclick="lboxStep(1)" aria-label="Next image">›</button>
+<div class="lbox-counter" id="lbox-counter"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+<a href="#hero" class="nav-name">Nupur Jain</a>
+<ul class="nav-links">
+<li><a href="#about">about</a></li>
+<li><a href="#projects">work</a></li>
+<li><a href="#contact">contact</a></li>
+</ul>
+</nav>
+
+<!-- HERO centred, no image -->
+<section id="hero">
+<div class="hero-deco-tl">
+<span class="lbl">living &amp; working in</span>
+<span class="val">Australia</span>
+</div>
+<h1 class="hero-name" id="heroName">Nupur<br>Jain</h1>
+<p class="hero-ethos" id="heroEthos"></p>
+<p class="hero-descriptor">narrative-led designer</p>
+<div class="hero-scroll">
+<span>scroll</span>
+<svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6 12l6 6 6-6"/></svg>
+</div>
+</section>
+
+<!-- SELECTED WORKS — new asymmetric grid, sits right under name, above About -->
+<section id="projects">
+<div class="section-divider reveal">
+<div class="section-divider-inner" style="flex-direction:column;align-items:flex-start;gap:.5rem;">
+<h2 class="proj-h">Selected<br>Works</h2>
+<p class="proj-note" style="font-family:'Mansalva',cursive;font-size:.9rem;color:var(--acc);margin:0;">click a piece to step into it →</p>
+</div>
+</div>
+
+<div class="work-grid">
+
+<div class="work-card size-lg" data-p="0">
+<div class="work-frame">
+<img src="Billboard_Mockup_3.jpg" alt="Held Within">
+</div>
+<div class="work-cap"><span class="work-cap-title">Held Within</span><span class="work-cap-meta">2025</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="1">
+<div class="work-frame">
+<img src="rosyd_broch_cover.jpg" alt="ROSYD International">
+</div>
+<div class="work-cap"><span class="work-cap-title">ROSYD International</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="6">
+<div class="work-frame">
+<img src="library_thumbnail.jpg" alt="State Library Companion">
+</div>
+<div class="work-cap"><span class="work-cap-title">State Library Companion</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-lg" data-p="8">
+<div class="work-frame">
+<img src="for_when_deck_of_images_thumbnail.png" alt="For When">
+</div>
+<div class="work-cap"><span class="work-cap-title">For When</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="5">
+<div class="work-frame">
+<img src="mars_submission_final.jpg" alt="Mars Integration Network">
+</div>
+<div class="work-cap"><span class="work-cap-title">Mars Integration Network</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-lg" data-p="7">
+<div class="work-frame">
+<img src="unnoticed_poster_mockup.jpg" alt="The Unnoticed Patterns">
+</div>
+<div class="work-cap"><span class="work-cap-title">The Unnoticed Patterns</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="2">
+<div class="work-frame">
+<img src="db_wide.jpg" alt="Daily Blooms x Bondi Boost">
+</div>
+<div class="work-cap"><span class="work-cap-title">Daily Blooms × Bondi Boost</span><span class="work-cap-meta">2025</span></div>
+</div>
+
+<div class="work-card" data-p="3">
+<div class="work-frame">
+<img src="monty_hotel.jpg" alt="The Monty Motel">
+</div>
+<div class="work-cap"><span class="work-cap-title">The Monty Motel</span><span class="work-cap-meta">2025</span></div>
+</div>
+
+<div class="work-card size-sm" data-p="4">
+<div class="work-frame">
+<img src="table_thumb.jpg" alt="A Place at Every Table">
+</div>
+<div class="work-cap"><span class="work-cap-title">A Place at Every Table</span><span class="work-cap-meta">2022</span></div>
+</div>
+
+<div class="work-card size-sm archive" data-p="10">
+<div class="work-frame">
+<img src="port_grandmother.jpg" alt="Grandparent Gaze">
+</div>
+<div class="work-cap"><span class="work-cap-title">Grandparent Gaze</span><span class="work-cap-meta">2022</span></div>
+</div>
+
+<div class="work-card size-sm archive" data-p="11">
+<div class="work-frame">
+<img src="photo01.jpg" alt="Selected Photography">
+</div>
+<div class="work-cap"><span class="work-cap-title">Selected Photography</span><span class="work-cap-meta">2026</span></div>
+</div>
+
+</div>
+
+</section>
+
+<!-- THOUGHT STRIP -->
+<div class="strip">
+<span class="strip-lbl">currently</span>
+<span class="strip-dot"></span>
+<span class="strip-txt" id="thought">reading: a substack about diaspora food cultures and why they hit so close to home</span>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+<!-- accent bar with ethos quote -->
+<div class="about-accent-bar reveal">
+<div>
+<h2 class="about-accent-heading">A little<br>about my<br>practice<br><em>&amp; I</em></h2>
+</div>
+<div>
+<p class="about-accent-quote">I approach creative work through curiosity about people: what they notice, avoid, linger on, and connect with. I want to give people a reason to recognise themselves, partake, or remember something.<br><br>At its best, design makes you feel that something was made with you in mind.</p>
+</div>
+</div>
+<!-- body section -->
+<div class="about-body-section">
+<div class="reveal-left">
+<p class="slbl">about me</p>
+<p class="about-intro">Hi, I'm Nupur, a creative thinker, maker, and designer</p>
+<div class="about-body">
+<p class="about-hook">If I had to 'blame' something…</p>
+<button class="about-more-btn" id="about-more-btn" onclick="toggleAboutMore()">read more <span id="about-more-arr">↓</span></button>
+<div class="about-more" id="about-more">
+<p>it'd probably be growing up across different cultural worlds (don't get me wrong, I wouldn't have it any other way). Though, the numerous countries I've lived in have made somewhere-in-between feel pretty normal to me, so naturally I gravitate towards projects and practices that hold plural perspectives and use design as a form of recognition.</p>
+<p>I pull from films I love, art that inspires me, everyday observations that live as scribbles in my journals. All of that shapes how I build context before form.</p>
+<p>I'm building a practice that sits between strategy and experience: conceptual and immersive, designing for inclusion, for social causes, and for the kind of resonance that stays with people.</p>
+</div>
+</div>
+</div>
+<div class="about-r reveal-right">
+<div class="about-photo">
+<img src="cover_me.jpg" alt="Nupur Jain">
+</div>
+</div>
+</div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal">
+<div class="mbox">
+<div class="m-header">
+<div class="m-header-mid">
+<h2 class="m-title" id="mtitle"></h2>
+<p class="m-lbl" id="mlbl"></p>
+</div>
+<div class="m-header-meta" id="mmeta"></div>
+<button class="mclose" id="mclose">✕ close</button>
+</div>
+<div class="m-body-wrap">
+<div class="m-text">
+<p class="m-sub" id="msub"></p>
+<div class="m-body" id="mbody"></div>
+<div class="m-note" id="mnote"></div>
+</div>
+<div class="m-imgs" id="mimgs"></div>
+</div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="contact-inner">
+<div class="reveal"><p class="slbl" style="color:rgba(242,240,235,.55)">get in touch</p><h2 class="contact-h">Let's<br><em>talk.</em></h2></div>
+<div class="reveal" style="transition-delay:.15s">
+<div class="c-hand-row">
+<div class="c-hand-col">
+<p class="c-hand">open to creative roles, collaborations, mentorship &amp; conversations</p>
+<a href="mailto:nupurjain1502@gmail.com" class="c-email">nupurjain1502@gmail.com</a>
+<div class="socials">
+<a href="https://www.linkedin.com/in/nupur-j-82397b25a/" target="_blank">LinkedIn</a>
+<a href="#" style="opacity:.4;pointer-events:none;">Behance coming soon</a>
+</div>
+</div>
+<div class="contact-photo"><img src="contact_photo.jpg" alt=""></div>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<span class="fn">Nupur Jain</span>
+<p>Melbourne, Australia 2026</p>
+<p>narrative-led design</p>
+</footer>
+
+<script>
+// ── Cursor ──
+// Bigger custom cursor. Fails safe: fades out if the mouse stops sending move
+// events (window loses focus, mouse dragged out of viewport, etc) instead of
+// leaving a frozen dot on screen. Fully disabled on touch devices (see CSS
+// media query above too — this JS check just also skips binding listeners).
+const cur=document.getElementById('cur');
+const curLabel=document.getElementById('curlabel');
+const isTouch=window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+if(!isTouch){
+  document.addEventListener('mousemove',e=>{
+    cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+    curLabel.style.left=e.clientX+'px';curLabel.style.top=e.clientY+'px';
+    cur.style.opacity='1';
+  });
+  document.querySelectorAll('a,.prow,.card,.vbtn,.archive-toggle,.mclose,.arc-slide,.lbox-close,.lbox-nav,.arc-hint').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+  });
+  function bindLabel(sel,text){
+    document.querySelectorAll(sel).forEach(el=>{
+      el.addEventListener('mouseenter',()=>{curLabel.textContent=text;curLabel.classList.add('show');});
+      el.addEventListener('mouseleave',()=>curLabel.classList.remove('show'));
+    });
+  }
+  bindLabel('.prow','read →');
+  bindLabel('.card','open →');
+  bindLabel('.pe-hero-img,.pe-strip a,.pe-imgs a,.arc-slide a','view');
+  bindLabel('.c-email','say hi →');
+  const heroNameEl=document.getElementById('heroName');
+  heroNameEl.addEventListener('mouseenter',()=>{cur.classList.add('onname');cur.classList.remove('big');});
+  heroNameEl.addEventListener('mouseleave',()=>cur.classList.remove('onname'));
+
+  // fail-safe fade
+  let curTimeout;
+  document.addEventListener('mousemove',()=>{
+    clearTimeout(curTimeout);
+    curTimeout=setTimeout(()=>{cur.style.opacity='0';},2500);
+  });
+  window.addEventListener('blur',()=>{cur.style.opacity='0';});
+}else{
+  cur.style.display='none';
+  curLabel.style.display='none';
+}
+
+// Nav solid on scroll
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+// Animated ethos line types out word by word
+const ethos='curiosity · culture · connection';
+const ethosEl=document.getElementById('heroEthos');
+const words=ethos.split('');
+words.forEach((ch,i)=>{
+const s=document.createElement('span');
+s.textContent=ch;
+s.style.opacity='0';
+s.style.transform='translateY(10px)';
+s.style.display='inline-block';
+s.style.transition=`opacity .3s ${800+i*25}ms, transform .3s ${800+i*25}ms`;
+ethosEl.appendChild(s);
+setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)';},800+i*25);
+});
+// Scroll reveal
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}}),{threshold:.07});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>ro.observe(el));
+// Rotating thoughts
+const thoughts=[
+"currently: restacking substack articles I wish I'd written",
+"lately obsessed with: creating a photo album for every year of my adult life",
+"into: junk journalling again! give me scissors, glue, and lots of scraps",
+"making peace with 'coffee chats' when I don't even drink coffee",
+"my favourite phrase: 'worrying is such a terrible use of your imagination'",
+"down a neuroscience spiral, researching memory reconsolidation",
+"I'm probably listening to music from every genre and language possible",
+];
+let ti=0;
+const tel=document.getElementById('thought');
+setInterval(()=>{
+tel.classList.add('hide');
+setTimeout(()=>{ti=(ti+1)%thoughts.length;tel.textContent=thoughts[ti];tel.classList.remove('hide');},550);
+},4800);
+
+// ── Mind-map project data (restructured copy with visible bold subheadings:
+// Brief/Scope, Insight, Approach, Outcome/Recognition — kept in original voice) ──
+const pdata=[
+{num:"01",lbl:"Brand Strategy & Identity Concept",title:"Held Within",sub:"2025 brand strategy / identity / storytelling",meta:"2025 · branding / print / spatial",body:"<p><strong>Brief</strong>Responding to the brief of creating an \u201corigin brand,\u201d I developed Held Within as a hybrid print-digital platform centred on belonging, memory and in-between cultural experiences.</p><p><strong>Insight</strong>This personally driven brand led me to reflect on my own experiences. I aimed to fill a gap I wish had existed for me: an intentional publication space for in-betweeners, a comfort space to keep and share stories that spiral and evolve. Driven by research into diasporic identity, it was created to honour plural identities, a niche audience for a space rarely seen.</p><p><strong>Approach</strong>I approached the identity as a narrative system, considering how my target audience would see themselves reflected within the brand. The result is a full campaign system spanning print, digital and spatial applications, customer journeys, activations, editorial design and tactile touchpoints, exploring how branding can create recognition, intimacy and community for underrepresented perspectives.</p>",note:"",imgs:["Billboard_Mockup_3.jpg","hw_activation.jpg","poster_FINAL_mockup.jpg","Stationary_Mockup_2.jpg","ig_mockups_fnal_.jpg","Magazine_mockup_open.jpg","hw_business_cards.jpg","hw_cards_front.jpg","Billboard_Mockup2_final.jpg","hw_posters.jpg","hw_colour.jpg","hw_fonts.jpg","hw_logo.jpg","hw_moodboard.jpg"]},
+{num:"02",lbl:"Information Design",title:"ROSYD International",sub:"2026 publication / campaign / retail branding",meta:"2026 · publication / campaign",body:"<p><strong>Brief</strong>Worked across print and digital collateral for ROSYD International\u2019s Sydney-based duty-free retail stores, developing multilingual brochures, EDMs, retail photography, and publication advertisements for affiliated airlines including China Airlines. The project required balancing clarity, accessibility, and brand consistency across multiple formats, audiences, and languages.</p><p><strong>Approach</strong>My approach focused on the brochure and publication design itself as much as the photography, creating adaptable layouts and typography systems that could translate seamlessly between print and digital environments while remaining visually cohesive across languages. Alongside image-making and post-production, the work strengthened my understanding of production design, hierarchy, and designing within established commercial brand constraints for large-scale international audiences.</p><p><strong>Outcome</strong>My brochure and publication designs were subsequently used by ROSYD\u2019s affiliate, China Airlines, and featured in their in-flight magazine as promotional advertising for ROSYD\u2019s duty-free retail stores.</p>",note:"",imgs:["rosyd_broch_cover.jpg","rosyd_broch_eng.jpg","rosyd_broch_langs.jpg","rosyd_broch_jp.jpg","magazine_spread_mockup.jpg","rosyd_store1.jpg","rosyd_store2.jpg","rosyd_store3.jpg"]},
+{num:"03",lbl:"Brand Activation Collateral",title:"Daily Blooms × Bondi Boost",sub:"2025 brand activation / curation / experiential",meta:"2025 · brand activation",body:"<p><strong>Brief</strong>For the Daily Blooms \u00d7 Bondi Boost PR launch at That Paper Joint, I developed curated collage kits designed to turn branded materials into something more tactile and participatory.</p><p><strong>Insight</strong>Rather than simply pulling from the brands' surface-level visual cues, I looked for the ideas underneath them: leisure, femininity, wellness, nostalgia and handmade intimacy. Shaping the visual direction and materials around these hidden cues felt more useful than working from branding alone.</p><p><strong>Outcome</strong>The result was an activation people could actually do something with, making, playing and crafting their own little stories through the collaging experience: memorable engagement through design.</p>",note:"",imgs:["db_wide.jpg","db_new_02.jpg","db_closeup_new.jpg"]},
+{num:"04",lbl:"Art Direction for Interiors",title:"The Monty Motel Commission",sub:"2025 collage / spatial storytelling / art direction",meta:"2025 · collage / art direction",body:"<p><strong>Scope</strong>Assisted design studio That Paper Joint in developing bespoke collage artworks for The Monty Boutique Motel, responding to themes of travel, nostalgia, landscape, and road-trip culture tied to their Great Ocean Road location.</p><p><strong>Approach</strong>The process involved researching the motel\u2019s visual identity and translating these themes into layered physical and digital collage compositions for interior spaces. Working across material sourcing, composition development, scanning, and digital refinement, I contributed to shaping artworks that extended the motel\u2019s atmosphere beyond branding into the spatial experience itself.</p><p><strong>Outcome</strong>The project strengthened my interest in environmental storytelling and how visual systems can shape the emotional tone of physical spaces.</p>",note:"First image sourced from <a href=\"https://www.themontymotel.com.au/\" target=\"_blank\" rel=\"noopener\">The Monty Motel's website</a>, shown in context, not my own photograph.",imgs:["monty_hotel.jpg","monty_new.jpg","monty_collage2_new.jpg","monty_collage_grid.jpg"]},
+{num:"05",lbl:"Installation Art",title:"A Place at Every Table",sub:"2022 installation / relational / multisensory",meta:"2022 · installation",body:"<p><strong>Scope</strong>What does my family dinner table remember? A Place at Every Table is a relational installation exploring immigration, assimilation and cultural memory through food, fabric, conversation and participation. Centred around my family dining table, the work brought together the countries, cuisines, recipes and stories that shaped my upbringing across multiple cultural contexts.</p><p><strong>Approach</strong>I used interviews, handwritten recipes, printmaking, textiles and culturally specific ingredients to turn the table into both an archive and a living performance space. My family's participation became central to the work itself, they were invited to eat directly from the installation, with spills, stains and traces of interaction gradually changing its surface.</p><p><strong>Outcome</strong>This evolving, colourful mess became a metaphor for how identities, histories and traditions are continuously inherited and adapted by the people gathered around them.</p>",note:"",wide:["table_overview.jpg"],imgs:["table_thumb.jpg","table_new1.jpg","table_new2.jpg","table_overview.jpg","table_detail1.jpg","table_detail2.jpg","table_detail3.jpg"]},
+{num:"06",lbl:"Speculative Service Design / UX Strategy / Civic Systems Design",title:"Mars Integration Network",sub:"2026 speculative service design / UX strategy / civic systems design",meta:"2026 · speculative service design",body:"<p><strong>Brief</strong>What happens when institutions stop translating lived experience into administrative value? Mars Integration Network uses speculative design to reimagine a six-step permanent residency assessment through two parallel systems of value.</p><p><strong>Insight</strong>On Earth, applicants are assessed through economic productivity and institutional classification. On Mars, contribution is measured through adaptability, collective survival and community resilience. By relocating the same procedure into a resource-dependent 'Martian' (foreign to us) settlement, the project asks how much our ideas of worth, belonging and citizenship are shaped by the environments we live in.</p><p><strong>Approach</strong>I developed the service concept from strategy through to experience, creating service journeys, blueprints, civic artefacts, environmental storyboards and UI systems. The project also strengthened my AI-assisted workflow, using prompt engineering within Figma to rapidly prototype interface concepts.</p>",note:"Project part of RMIT University \u2014 Experimental Experience Design Studio, a 12-week speculative design course exploring alternative models of permanent residency assessment (Mars-Local). Awarded High Distinction (90/100) in the studio.<br><br>To view the full Mars Integration Network walkthrough, <a href=\"https://www.emaze.com/@ALFQQQOWR/nupur---mars-walkthrough\" target=\"_blank\" rel=\"noopener\">click here</a>.",imgs:["mars_thumbnail.jpg","mars_entry.jpg","mars_classification.jpg","mars_earth_screens.jpg","mars_kiosk.jpg","mars_submission_mockup.jpg","mars_submission_final.jpg","mars_outcome.jpg","mars_support_mockup2.jpg","mars_artefact_01.jpg","mars_artefact_02.jpg"]},
+{num:"07",lbl:"Service Design · Research · Service Blueprint · Prototyping",title:"State Library Companion",sub:"2026 service design / research / service blueprint / prototyping",meta:"2026 · service design / research",body:"<p><strong>Brief</strong>How do you find your place in a space you're not familiar with? Libraries can be intimidating when you don't know where to go, what you're looking for, or whether you're even in the right place. Developed for State Library Victoria, this fictional service design project explores how personalised guidance could make navigating complex public spaces feel more intuitive and welcoming, extending beyond wayfinding to the resources and services within these environments.</p><p><strong>Approach</strong>The resulting concept creates a connective layer between people, places and information, helping visitors discover with more confidence. I led much of the initial ideation and conceptual development, as well as directing the project's photography and videography.</p>",note:"The stills shown here are taken from our final film.",imgs:["library_thumbnail.jpg","library_extra_01.jpg","library_concept_01.jpg","library_concept_02.jpg","library_concept_03.jpg"]},
+{num:"08",lbl:"part of international common design studio, 2026",title:"The Unnoticed Patterns",sub:"Common Design Studio · collaborative moving image · 2026",meta:"2026 · Common Design Studio",body:"<p><strong>Scope</strong>What does a place remember that we don't? Developed through the international Common Design Studio, The Unnoticed Patterns explores home as something more complicated than a place we carry with us. Working across Australia, Vietnam, India and Spain, we looked to architecture, materials, sounds and everyday encounters to build a shared visual language around how places shape us.</p><p><strong>Approach</strong>I contributed to concept development, visual research, copywriting and narrative direction, helping shape the project's central question and overall storytelling. Alongside the collaborative work, I independently designed an editorial publication documenting the process from beginning to end, combining my own reflections with the exhibition design and final outcomes; the magazine pages shown here are my individual work.</p><p><strong>Recognition</strong>Receiving international recognition, this project was selected for Urban Digital Canvas Shanghai 2026, an international digital arts exhibition presented by the ACM SIGGRAPH Digital Arts Community, Chewing Theory and the City of Shanghai as part of the Shanghai International Light Festival. The work will be exhibited for site-specific digital screens across Shanghai's Changning District.</p>",note:"Selected for <a href=\"https://dac.siggraph.org/exhibition/2026-urban-digital-canvas-shanghai/\" target=\"_blank\" rel=\"noopener\">Urban Digital Canvas Shanghai 2026</a>. View the official Common Design Studio page for this project <a href=\"https://www.commondesignstudio.net/recipes-for-action/categories/home\" target=\"_blank\" rel=\"noopener\">here</a>.",video:"WOKBqxgsKFU",videoNote:"group work \u2014 our team's video, \"The Unnoticed Patterns\"",imgs:["unnoticed_poster_full.jpg","unnoticed_poster_mockup.jpg","unnoticed_mag02.jpg","unnoticed_mag01.jpg","unnoticed_mag03.jpg","unnoticed_mag04.jpg","unnoticed_mag05.jpg","unnoticed_mag06.jpg"]},
+{num:"09",lbl:"Art Direction, Branding, Campaign Thinking",title:"For When",sub:"2026 art direction / branding / campaign thinking",meta:"2026 · campaign / branding",body:"<p><strong>Brief / Scope</strong>For When is a personally directed fictional city-discovery brand developed as an advertising campaign. The brief I set myself was to challenge the formulaic way people discover cities through lists, ratings, \u201chidden gems\u201d and \u201cbest of\u201d searches.</p><p><strong>Approach</strong>Deadpan situational copy, my own observational photography and videography, and illustrative elements build a playful language organised around situations rather than destinations. The same idea then extends across OOH, social, physical route brochures and film, with Google Maps acting as the infrastructure that turns each \u201cwhen\u201d into somewhere to go.</p><p><strong>Insight</strong>The concept grew from my own oddly specific situations: wanting to be alone without staying home, meeting someone for the first time, or wanting to dance and sing safely with strangers. Today, algorithms only generate places before they understand why we want to go there. For When gives these everyday situations a vocabulary, a place to input the 'unsearchable thoughts', creating a guide organised around how you feel and what you need, rather than simply where to go.</p>",note:"",video:"YjI7LBCZjRI",imgs:["for_when_deck_of_images.png","for_when_deck_of_images2.png","for_when_deck_of_images3.png","for_when_deck_of_images4.png","for_when_deck_of_images5.png","for_when_deck_of_images6.png","for_when_deck_of_images7.png","for_when_deck_of_images8.png","for_when_deck_of_images9.png","for_when_deck_of_images10.png","for_when_deck_of_images11.png","for_when_deck_of_images12.png","for_when_deck_of_images13.png","for_when_deck_of_images15.png","for_when_deck_of_images16.png","for_when_deck_of_images17.png","for_when_deck_of_images18.png","for_when_deck_of_images19.png","for_when_deck_of_images20.png"]},
+{num:"10",lbl:"Observational Illustration / Portraiture",title:"Grandparent Gaze",sub:"2022 observational illustration / portraiture",meta:"2022 · portraiture",body:"<p><strong>Brief / Scope</strong>It started with finding photographs of my grandpa and great grandmother, photographs that captured an emotion I felt only I could decode.</p><p><strong>Approach</strong>Working with charcoal, I focused less on realism and more on atmosphere, intimacy and emotional presence.</p><p><strong>Insight</strong>The project became a way of looking more closely at people, emotion and nuance. Texture, contrast and human expression build my storytelling approach, which still shapes my design practice today.</p>",note:"",imgs:["port_grandmother.jpg","port_grandad.jpg","port_grandad_process.jpg","port_process.jpg","port_final.jpg"]},
+{num:"11",lbl:"Photography / Visual Storytelling",title:"Selected Photography",sub:"2026 photography / visual storytelling",meta:"2026 · photography",body:"<p><strong>Brief / Scope</strong>A collection of photographs taken and edited over several years, brought together around the details, people and places that catch my attention.</p><p><strong>Approach</strong>I love playing with symmetry, asymmetry and finding lines that guide your eye somewhere unexpected.</p><p><strong>Insight</strong>The photographs reflect the way I naturally observe the world, and continue to inform how I research, find visual stories and approach creative direction.</p>",note:"",imgs:["photo01.jpg","photo02.jpg","photo03.jpg","photo04.jpg","photo05.jpg","photo06.jpg","photo07.jpg","photo08.jpg","photo09.jpg","photo10.jpg","photo11.jpg","photo12.jpg"]},
+];
+
+document.querySelectorAll('.work-card').forEach(card=>{
+card.addEventListener('click',()=>openModal(parseInt(card.dataset.p)));
+});
+
+/* ──────────────────────────────────────────────────────────
+   NAVIGATION HISTORY
+   Every time a full-page project modal opens, we push a history
+   entry. Browser back button, trackpad two-finger swipe-back,
+   mobile edge-swipe-back, and the Escape key all resolve through
+   the same handler, closing the modal and returning to the
+   Selected Works grid, exactly like flicking through a
+   native app between projects.
+   ────────────────────────────────────────────────────────── */
+let modalOpen=false;
+
+const modal=document.getElementById('modal');
+
+function openModal(i){
+const p=pdata[i];
+document.getElementById('mlbl').textContent=p.lbl;
+document.getElementById('mtitle').textContent=p.title;
+document.getElementById('mmeta').textContent=p.meta;
+document.getElementById('msub').textContent=p.sub;
+document.getElementById('mbody').innerHTML=p.body;
+document.getElementById('mnote').innerHTML=p.note||'';
+document.getElementById('mnote').style.display=p.note?'block':'none';
+const mi=document.getElementById('mimgs');
+let html='';
+// All images shown at once in a 2-col grid — vertically scrollable with the page.
+// Video (if present) renders after all images, spanning full width, so it never
+// creates uneven gutters next to a landscape neighbour.
+const imgs=p.imgs||[];
+const wide=p.wide||[];
+html+=imgs.map(s=>{
+const isWide=wide.includes(s);
+return `<a href="${s}" onclick="openLbox(event,this)"${isWide?' style="grid-column:1/-1;"':''}><img src="${s}" alt=""${isWide?' style="aspect-ratio:16/9;"':''}></a>`;
+}).join('');
+if(p.video){
+html+=`<div class="m-video" style="grid-column:1/-1;margin:0 auto;">${''}<iframe src="https://www.youtube.com/embed/${p.video}" title="${p.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+}
+mi.innerHTML=html;
+modal.classList.add('open');
+window.scrollTo(0,0);
+document.body.style.overflow='hidden';
+modalOpen=true;
+history.pushState({modal:true,project:i},'','');
+}
+
+function closeModal(){
+if(!modalOpen)return;
+modal.classList.remove('open');
+document.body.style.overflow='';
+modalOpen=false;
+document.getElementById('projects').scrollIntoView({block:'start'});
+}
+
+document.getElementById('mclose').onclick=()=>{
+closeModal();
+if(history.state&&history.state.modal)history.back();
+};
+modal.onclick=e=>{};
+
+// Escape closes lightbox first if open, otherwise closes the project modal
+document.addEventListener('keydown',e=>{
+if(e.key!=='Escape')return;
+if(document.getElementById('lbox').classList.contains('open')){closeLbox();return;}
+if(modalOpen){
+closeModal();
+if(history.state&&history.state.modal)history.back();
+}
+});
+
+// Browser back button AND trackpad two-finger swipe-back AND mobile
+// edge-swipe-back all fire 'popstate' in a standard browser, since we
+// pushed a history entry when the modal opened.
+window.addEventListener('popstate',()=>{
+if(document.getElementById('lbox').classList.contains('open'))closeLbox();
+if(modalOpen)closeModal();
+});
+
+let lboxGallery=[],lboxIdx=0;
+function openLbox(e,el){
+e.preventDefault();
+const carousel=el.closest('.pe-carousel');
+const container=el.closest('.pe-imgs,.m-imgs,.arc-slider,.arc-photo-grid');
+if(carousel){
+lboxGallery=Array.from(carousel.querySelectorAll('a')).map(a=>a.getAttribute('href'));
+lboxIdx=lboxGallery.indexOf(el.getAttribute('href'));
+}else if(container){
+lboxGallery=Array.from(container.querySelectorAll('a')).map(a=>a.getAttribute('href'));
+lboxIdx=lboxGallery.indexOf(el.getAttribute('href'));
+}else{
+lboxGallery=[el.getAttribute('href')];
+lboxIdx=0;
+}
+showLboxImage();
+document.getElementById('lbox').classList.add('open');
+}
+function showLboxImage(){
+document.getElementById('lbox-img').src=lboxGallery[lboxIdx];
+const multi=lboxGallery.length>1;
+document.getElementById('lbox-prev').style.display=multi?'flex':'none';
+document.getElementById('lbox-next').style.display=multi?'flex':'none';
+document.getElementById('lbox-counter').textContent=multi?(lboxIdx+1)+' / '+lboxGallery.length:'';
+}
+function lboxStep(dir){
+if(lboxGallery.length<2)return;
+lboxIdx=(lboxIdx+dir+lboxGallery.length)%lboxGallery.length;
+showLboxImage();
+}
+function closeLbox(){document.getElementById('lbox').classList.remove('open');}
+document.getElementById('lbox').addEventListener('click',function(e){if(e.target===this)closeLbox();});
+document.addEventListener('keydown',e=>{
+if(!document.getElementById('lbox').classList.contains('open'))return;
+if(e.key==='ArrowLeft')lboxStep(-1);
+if(e.key==='ArrowRight')lboxStep(1);
+});
+
+function toggleAboutMore(){
+const m=document.getElementById('about-more');
+const b=document.getElementById('about-more-btn');
+const isOpen=m.classList.toggle('open');
+b.classList.toggle('open',isOpen);
+b.childNodes[0].textContent=isOpen?'show less ':'continue reading ';
+}
+</script>
+</body>
+</html>
