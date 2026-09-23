@@ -191,7 +191,7 @@ background:var(--lgrey);
 .slbl{font-size:.55rem;letter-spacing:.16em;text-transform:lowercase;color:var(--grey);margin-bottom:.9rem;}
 .about-h{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:.92;text-transform:uppercase;margin-bottom:.8rem;letter-spacing:-.01em;}
 .about-h em{font-style:normal;color:var(--acc);}
-.about-intro{font-family:'Mansalva',cursive;font-size:1.05rem;color:var(--black);margin-bottom:1.1rem;line-height:1.6;}
+.about-intro{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--black);margin-bottom:1.1rem;}
 .about-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:#585858;max-width:460px;}
 .about-body p+p{margin-top:.85rem;}
 .about-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .55s cubic-bezier(.16,1,.3,1),opacity .45s ease;margin-top:0;}
@@ -300,10 +300,12 @@ display:block;
 background:var(--lgrey);
 }
 .work-cap{
+margin-top:.7rem;
+}
+.work-cap-top{
 display:flex;
 justify-content:space-between;
 align-items:baseline;
-margin-top:.7rem;
 gap:.6rem;
 }
 .work-cap-title{
@@ -315,12 +317,19 @@ letter-spacing:-.01em;
 line-height:1.15;
 }
 .work-cap-meta{
-font-family:'Cormorant Garamond',serif;
-font-style:normal;
-font-size:.78rem;
-color:var(--grey);
+font-family:'Poppins',sans-serif;
+font-weight:700;
+font-size:.85rem;
+color:var(--acc);
 white-space:nowrap;
 flex-shrink:0;
+}
+.work-cap-sub{
+font-family:'Cormorant Garamond',serif;
+font-style:normal;
+font-size:.85rem;
+color:var(--acc);
+margin-top:.3rem;
 }
 .work-card.archive .work-frame{opacity:.9;}
 .work-card.archive .work-cap-title{color:#4a4a4a;}
@@ -620,77 +629,77 @@ body{cursor:auto;}
 <div class="work-frame">
 <img src="Billboard_Mockup_3.jpg" alt="Held Within">
 </div>
-<div class="work-cap"><span class="work-cap-title">Held Within</span><span class="work-cap-meta">2025</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">Held Within</span><span class="work-cap-meta">2025</span></div><div class="work-cap-sub">brand strategy / identity / storytelling</div></div>
 </div>
 
 <div class="work-card" data-p="1">
 <div class="work-frame">
 <img src="rosyd_broch_cover.jpg" alt="ROSYD International">
 </div>
-<div class="work-cap"><span class="work-cap-title">ROSYD International</span><span class="work-cap-meta">2026</span></div>
-</div>
-
-<div class="work-card" data-p="6">
-<div class="work-frame">
-<img src="library_thumbnail.jpg" alt="State Library Companion">
-</div>
-<div class="work-cap"><span class="work-cap-title">State Library Companion</span><span class="work-cap-meta">2026</span></div>
-</div>
-
-<div class="work-card" data-p="8">
-<div class="work-frame">
-<img src="for_when_deck_of_images_thumbnail.jpg" alt="For When">
-</div>
-<div class="work-cap"><span class="work-cap-title">For When</span><span class="work-cap-meta">2026</span></div>
-</div>
-
-<div class="work-card" data-p="5">
-<div class="work-frame">
-<img src="mars_submission_final.jpg" alt="Mars Integration Network">
-</div>
-<div class="work-cap"><span class="work-cap-title">Mars Integration Network</span><span class="work-cap-meta">2026</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">ROSYD International</span><span class="work-cap-meta">2026</span></div><div class="work-cap-sub">publication / campaign / retail branding</div></div>
 </div>
 
 <div class="work-card" data-p="7">
 <div class="work-frame">
 <img src="unnoticed_poster_mockup.jpg" alt="The Unnoticed Patterns">
 </div>
-<div class="work-cap"><span class="work-cap-title">The Unnoticed Patterns</span><span class="work-cap-meta">2026</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">The Unnoticed Patterns</span><span class="work-cap-meta">2026</span></div><div class="work-cap-sub">Common Design Studio · collaborative moving image</div></div>
+</div>
+
+<div class="work-card" data-p="8">
+<div class="work-frame">
+<img src="for_when_deck_of_images_thumbnail.jpg" alt="For When">
+</div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">For When</span><span class="work-cap-meta">2026</span></div><div class="work-cap-sub">art direction / branding / campaign thinking</div></div>
+</div>
+
+<div class="work-card" data-p="5">
+<div class="work-frame">
+<img src="mars_submission_final.jpg" alt="Mars Integration Network">
+</div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">Mars Integration Network</span><span class="work-cap-meta">2026</span></div><div class="work-cap-sub">speculative service design / UX strategy / civic systems design</div></div>
+</div>
+
+<div class="work-card" data-p="6">
+<div class="work-frame">
+<img src="library_thumbnail.jpg" alt="State Library Companion">
+</div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">State Library Companion</span><span class="work-cap-meta">2026</span></div><div class="work-cap-sub">service design / research / service blueprint / prototyping</div></div>
 </div>
 
 <div class="work-card" data-p="2">
 <div class="work-frame">
 <img src="db_wide.jpg" alt="Daily Blooms x Bondi Boost">
 </div>
-<div class="work-cap"><span class="work-cap-title">Daily Blooms × Bondi Boost</span><span class="work-cap-meta">2025</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">Daily Blooms × Bondi Boost</span><span class="work-cap-meta">2025</span></div><div class="work-cap-sub">brand activation / curation / experiential</div></div>
 </div>
 
 <div class="work-card" data-p="3">
 <div class="work-frame">
 <img src="monty_hotel.jpg" alt="The Monty Motel">
 </div>
-<div class="work-cap"><span class="work-cap-title">The Monty Motel</span><span class="work-cap-meta">2025</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">The Monty Motel</span><span class="work-cap-meta">2025</span></div><div class="work-cap-sub">collage / spatial storytelling / art direction</div></div>
 </div>
 
 <div class="work-card" data-p="4">
 <div class="work-frame">
 <img src="table_thumb.jpg" alt="A Place at Every Table">
 </div>
-<div class="work-cap"><span class="work-cap-title">A Place at Every Table</span><span class="work-cap-meta">2022</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">A Place at Every Table</span><span class="work-cap-meta">2022</span></div><div class="work-cap-sub">installation / relational / multisensory</div></div>
 </div>
 
 <div class="work-card archive" data-p="9">
 <div class="work-frame">
-<img src="port_grandmother.jpg" alt="Grandparent Gaze">
+<img src="port_process.jpg" alt="Grandparent Gaze">
 </div>
-<div class="work-cap"><span class="work-cap-title">Grandparent Gaze</span><span class="work-cap-meta">2022</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">Grandparent Gaze</span><span class="work-cap-meta">2022</span></div><div class="work-cap-sub">observational illustration / portraiture</div></div>
 </div>
 
 <div class="work-card archive" data-p="10">
 <div class="work-frame">
 <img src="photo01.jpg" alt="Selected Photography">
 </div>
-<div class="work-cap"><span class="work-cap-title">Selected Photography</span><span class="work-cap-meta">2026</span></div>
+<div class="work-cap"><div class="work-cap-top"><span class="work-cap-title">Selected Photography</span><span class="work-cap-meta">2026</span></div><div class="work-cap-sub">photography / visual storytelling</div></div>
 </div>
 
 </div>
@@ -718,7 +727,6 @@ body{cursor:auto;}
 <!-- body section -->
 <div class="about-body-section">
 <div class="reveal-left">
-<p class="slbl">about me</p>
 <p class="about-intro">Hi, I'm Nupur, a creative thinker, maker, and designer</p>
 <div class="about-body">
 <p class="about-hook">If I had to 'blame' something…</p>
@@ -876,11 +884,11 @@ const pdata=[
 {num:"02",lbl:"Information Design",title:"ROSYD International",sub:"2026 publication / campaign / retail branding",meta:"2026 · publication / campaign",body:"<p><strong>Brief</strong>Worked across print and digital collateral for ROSYD International\u2019s Sydney-based duty-free retail stores, developing multilingual brochures, EDMs, retail photography, and publication advertisements for affiliated airlines including China Airlines. The project required balancing clarity, accessibility, and brand consistency across multiple formats, audiences, and languages.</p><p><strong>Approach</strong>My approach focused on the brochure and publication design itself as much as the photography, creating adaptable layouts and typography systems that could translate seamlessly between print and digital environments while remaining visually cohesive across languages. Alongside image-making and post-production, the work strengthened my understanding of production design, hierarchy, and designing within established commercial brand constraints for large-scale international audiences.</p><p><strong>Outcome</strong>My brochure and publication designs were subsequently used by ROSYD\u2019s affiliate, China Airlines, and featured in their in-flight magazine as promotional advertising for ROSYD\u2019s duty-free retail stores.</p>",note:"",imgs:["rosyd_broch_cover.jpg","rosyd_broch_eng.jpg","rosyd_broch_langs.jpg","rosyd_broch_jp.jpg","magazine_spread_mockup.jpg","rosyd_store1.jpg","rosyd_store2.jpg","rosyd_store3.jpg"]},
 {num:"03",lbl:"Brand Activation Collateral",title:"Daily Blooms × Bondi Boost",sub:"2025 brand activation / curation / experiential",meta:"2025 · brand activation",body:"<p><strong>Brief</strong>For the Daily Blooms \u00d7 Bondi Boost PR launch at That Paper Joint, I developed curated collage kits designed to turn branded materials into something more tactile and participatory.</p><p><strong>Insight</strong>Rather than simply pulling from the brands' surface-level visual cues, I looked for the ideas underneath them: leisure, femininity, wellness, nostalgia and handmade intimacy. Shaping the visual direction and materials around these hidden cues felt more useful than working from branding alone.</p><p><strong>Outcome</strong>The result was an activation people could actually do something with, making, playing and crafting their own little stories through the collaging experience: memorable engagement through design.</p>",note:"",imgs:["db_wide.jpg","db_new_02.jpg","db_closeup_new.jpg"]},
 {num:"04",lbl:"Art Direction for Interiors",title:"The Monty Motel Commission",sub:"2025 collage / spatial storytelling / art direction",meta:"2025 · collage / art direction",body:"<p><strong>Scope</strong>Assisted design studio That Paper Joint in developing bespoke collage artworks for The Monty Boutique Motel, responding to themes of travel, nostalgia, landscape, and road-trip culture tied to their Great Ocean Road location.</p><p><strong>Approach</strong>The process involved researching the motel\u2019s visual identity and translating these themes into layered physical and digital collage compositions for interior spaces. Working across material sourcing, composition development, scanning, and digital refinement, I contributed to shaping artworks that extended the motel\u2019s atmosphere beyond branding into the spatial experience itself.</p><p><strong>Outcome</strong>The project strengthened my interest in environmental storytelling and how visual systems can shape the emotional tone of physical spaces.</p>",note:"First image sourced from <a href=\"https://www.themontymotel.com.au/\" target=\"_blank\" rel=\"noopener\">The Monty Motel's website</a>, shown in context, not my own photograph.",imgs:["monty_hotel.jpg","monty_new.jpg","monty_collage2_new.jpg","monty_collage_grid.jpg"]},
-{num:"05",lbl:"Installation Art",title:"A Place at Every Table",sub:"2022 installation / relational / multisensory",meta:"2022 · installation",body:"<p><strong>Scope</strong>What does my family dinner table remember? A Place at Every Table is a relational installation exploring immigration, assimilation and cultural memory through food, fabric, conversation and participation. Centred around my family dining table, the work brought together the countries, cuisines, recipes and stories that shaped my upbringing across multiple cultural contexts.</p><p><strong>Approach</strong>I used interviews, handwritten recipes, printmaking, textiles and culturally specific ingredients to turn the table into both an archive and a living performance space. My family's participation became central to the work itself, they were invited to eat directly from the installation, with spills, stains and traces of interaction gradually changing its surface.</p><p><strong>Outcome</strong>This evolving, colourful mess became a metaphor for how identities, histories and traditions are continuously inherited and adapted by the people gathered around them.</p>",note:"",wide:["table_overview.jpg"],imgs:["table_thumb.jpg","table_new1.jpg","table_new2.jpg","table_overview.jpg","table_detail1.jpg","table_detail3.jpg","table_detail2.jpg"]},
+{num:"05",lbl:"Installation Art",title:"A Place at Every Table",sub:"2022 installation / relational / multisensory",meta:"2022 · installation",body:"<p><strong>Scope</strong>What does my family dinner table remember? A Place at Every Table is a relational installation exploring immigration, assimilation and cultural memory through food, fabric, conversation and participation. Centred around my family dining table, the work brought together the countries, cuisines, recipes and stories that shaped my upbringing across multiple cultural contexts.</p><p><strong>Approach</strong>I used interviews, handwritten recipes, printmaking, textiles and culturally specific ingredients to turn the table into both an archive and a living performance space. My family's participation became central to the work itself, they were invited to eat directly from the installation, with spills, stains and traces of interaction gradually changing its surface.</p><p><strong>Outcome</strong>This evolving, colourful mess became a metaphor for how identities, histories and traditions are continuously inherited and adapted by the people gathered around them.</p>",note:"",wide:["table_overview.jpg"],imgs:["table_thumb.jpg","table_new1.jpg","table_new2.jpg","table_detail3.jpg","table_overview.jpg","table_detail1.jpg","table_detail2.jpg"]},
 {num:"06",lbl:"Speculative Service Design / UX Strategy / Civic Systems Design",title:"Mars Integration Network",sub:"2026 speculative service design / UX strategy / civic systems design",meta:"2026 · speculative service design",body:"<p><strong>Brief</strong>What happens when institutions stop translating lived experience into administrative value? Mars Integration Network uses speculative design to reimagine a six-step permanent residency assessment through two parallel systems of value.</p><p><strong>Insight</strong>On Earth, applicants are assessed through economic productivity and institutional classification. On Mars, contribution is measured through adaptability, collective survival and community resilience. By relocating the same procedure into a resource-dependent 'Martian' (foreign to us) settlement, the project asks how much our ideas of worth, belonging and citizenship are shaped by the environments we live in.</p><p><strong>Approach</strong>I developed the service concept from strategy through to experience, creating service journeys, blueprints, civic artefacts, environmental storyboards and UI systems. The project also strengthened my AI-assisted workflow, using prompt engineering within Figma to rapidly prototype interface concepts.</p>",note:"Project part of RMIT University \u2014 Experimental Experience Design Studio, a 12-week speculative design course exploring alternative models of permanent residency assessment (Mars-Local). Awarded High Distinction (90/100) in the studio.<br><br>To view the full Mars Integration Network walkthrough, <a href=\"https://www.emaze.com/@ALFQQQOWR/nupur---mars-walkthrough\" target=\"_blank\" rel=\"noopener\">click here</a>.",imgs:["mars_thumbnail.jpg","mars_entry.jpg","mars_classification.jpg","mars_earth_screens.jpg","mars_kiosk.jpg","mars_submission_mockup.jpg","mars_submission_final.jpg","mars_outcome.jpg","mars_support_mockup2.jpg","mars_artefact_01.jpg","mars_artefact_02.jpg"]},
 {num:"07",lbl:"Service Design · Research · Service Blueprint · Prototyping",title:"State Library Companion",sub:"2026 service design / research / service blueprint / prototyping",meta:"2026 · service design / research",body:"<p><strong>Brief</strong>How do you find your place in a space you're not familiar with? Libraries can be intimidating when you don't know where to go, what you're looking for, or whether you're even in the right place. Developed for State Library Victoria, this fictional service design project explores how personalised guidance could make navigating complex public spaces feel more intuitive and welcoming, extending beyond wayfinding to the resources and services within these environments.</p><p><strong>Approach</strong>The resulting concept creates a connective layer between people, places and information, helping visitors discover with more confidence. I led much of the initial ideation and conceptual development, as well as directing the project's photography and videography in the group project.</p>",note:"The stills shown here are taken from our final film.",imgs:["library_thumbnail.jpg","library_extra_01.jpg","library_concept_01.jpg","library_concept_02.jpg"]},
 {num:"08",lbl:"part of international common design studio, 2026",title:"The Unnoticed Patterns",sub:"Common Design Studio · collaborative moving image · 2026",meta:"2026 · Common Design Studio",body:"<p><strong>Scope</strong>What does a place remember that we don't? Developed through the international Common Design Studio, The Unnoticed Patterns explores home as something more complicated than a place we carry with us. Working across Australia, Vietnam, India and Spain, we looked to architecture, materials, sounds and everyday encounters to build a shared visual language around how places shape us.</p><p><strong>Approach</strong>I contributed to concept development, visual research, copywriting and narrative direction, helping shape the project's central question and overall storytelling. Alongside the collaborative work, I independently designed an editorial publication documenting the process from beginning to end, combining my own reflections with the exhibition design and final outcomes; the magazine pages shown here are my individual work.</p><p><strong>Recognition</strong>Receiving international recognition, this project was selected for Urban Digital Canvas Shanghai 2026, an international digital arts exhibition presented by the ACM SIGGRAPH Digital Arts Community, Chewing Theory and the City of Shanghai as part of the Shanghai International Light Festival. The work will be exhibited for site-specific digital screens across Shanghai's Changning District.</p>",note:"Selected for <a href=\"https://dac.siggraph.org/exhibition/2026-urban-digital-canvas-shanghai/\" target=\"_blank\" rel=\"noopener\">Urban Digital Canvas Shanghai 2026</a>. View the official Common Design Studio page for this project <a href=\"https://www.commondesignstudio.net/recipes-for-action/categories/home\" target=\"_blank\" rel=\"noopener\">here</a>.",video:"WOKBqxgsKFU",videoOrientation:"landscape",videoNote:"group work \u2014 our team's video, \"The Unnoticed Patterns\"",imgs:["unnoticed_poster_full.jpg","unnoticed_poster_mockup.jpg","unnoticed_mag02.jpg","unnoticed_mag01.jpg","unnoticed_mag03.jpg","unnoticed_mag04.jpg","unnoticed_mag05.jpg","unnoticed_mag06.jpg"]},
-{num:"09",lbl:"Art Direction, Branding, Campaign Thinking",title:"For When",sub:"2026 art direction / branding / campaign thinking",meta:"2026 · campaign / branding",body:"<p><strong>Brief / Scope</strong>For When is a personally directed fictional city-discovery brand developed as an advertising campaign. The brief I set myself was to challenge the formulaic way people discover cities through lists, ratings, \u201chidden gems\u201d and \u201cbest of\u201d searches.</p><p><strong>Approach</strong>Deadpan situational copy, my own observational photography and videography, and illustrative elements build a playful language organised around situations rather than destinations. The same idea then extends across OOH, social, physical route brochures and film, with Google Maps acting as the infrastructure that turns each \u201cwhen\u201d into somewhere to go.</p><p><strong>Insight</strong>The concept grew from my own oddly specific situations: wanting to be alone without staying home, meeting someone for the first time, or wanting to dance and sing safely with strangers. Today, algorithms only generate places before they understand why we want to go there. For When gives these everyday situations a vocabulary, a place to input the 'unsearchable thoughts', creating a guide organised around how you feel and what you need, rather than simply where to go.</p>",note:"",video:"YjI7LBCZjRI",imgs:["for_when_deck_of_images19.jpg","for_when_deck_of_images20.jpg","for_when_deck_of_images3.jpg","for_when_deck_of_images4.jpg","for_when_deck_of_images5.jpg","for_when_deck_of_images6.jpg","for_when_deck_of_images7.jpg","for_when_deck_of_images8.jpg","for_when_deck_of_images9.jpg","for_when_deck_of_images10.jpg","for_when_deck_of_images11.jpg","for_when_deck_of_images12.jpg","for_when_deck_of_images13.jpg","for_when_deck_of_images15.jpg","for_when_deck_of_images16.jpg","for_when_deck_of_images17.jpg","for_when_deck_of_images18.jpg","for_when_deck_of_images.jpg","for_when_deck_of_images2.jpg","for_when_deck_of_images21.jpg"]},
+{num:"09",lbl:"Art Direction, Branding, Campaign Thinking",title:"For When",sub:"2026 art direction / branding / campaign thinking",meta:"2026 · campaign / branding",body:"<p><strong>Brief / Scope</strong>For When is a personally directed fictional city-discovery brand developed as an advertising campaign. The brief I set myself was to challenge the formulaic way people discover cities through lists, ratings, \u201chidden gems\u201d and \u201cbest of\u201d searches.</p><p><strong>Approach</strong>Deadpan situational copy, my own observational photography and videography, and illustrative elements build a playful language organised around situations rather than destinations. The same idea then extends across OOH, social, physical route brochures and film, with Google Maps acting as the infrastructure that turns each \u201cwhen\u201d into somewhere to go.</p><p><strong>Insight</strong>The concept grew from my own oddly specific situations: wanting to be alone without staying home, meeting someone for the first time, or wanting to dance and sing safely with strangers. Today, algorithms only generate places before they understand why we want to go there. For When gives these everyday situations a vocabulary, a place to input the 'unsearchable thoughts', creating a guide organised around how you feel and what you need, rather than simply where to go.</p>",note:"",video:"YjI7LBCZjRI",imgs:["for_when_deck_of_images3.jpg","for_when_deck_of_images20.jpg","for_when_deck_of_images19.jpg","for_when_deck_of_images4.jpg","for_when_deck_of_images5.jpg","for_when_deck_of_images6.jpg","for_when_deck_of_images7.jpg","for_when_deck_of_images8.jpg","for_when_deck_of_images9.jpg","for_when_deck_of_images10.jpg","for_when_deck_of_images11.jpg","for_when_deck_of_images12.jpg","for_when_deck_of_images13.jpg","for_when_deck_of_images15.jpg","for_when_deck_of_images16.jpg","for_when_deck_of_images17.jpg","for_when_deck_of_images18.jpg","for_when_deck_of_images.jpg","for_when_deck_of_images2.jpg","for_when_deck_of_images21.jpg"]},
 {num:"10",lbl:"Observational Illustration / Portraiture",title:"Grandparent Gaze",sub:"2022 observational illustration / portraiture",meta:"2022 · portraiture",body:"<p><strong>Brief / Scope</strong>It started with finding photographs of my grandpa and great grandmother, photographs that captured an emotion I felt only I could decode.</p><p><strong>Approach</strong>Working with charcoal, I focused less on realism and more on atmosphere, intimacy and emotional presence.</p><p><strong>Insight</strong>The project became a way of looking more closely at people, emotion and nuance. Texture, contrast and human expression build my storytelling approach, which still shapes my design practice today.</p>",note:"",imgs:["port_grandmother.jpg","port_grandad.jpg","port_grandad_process.jpg","port_process.jpg","port_final.jpg"]},
 {num:"11",lbl:"Photography / Visual Storytelling",title:"Selected Photography",sub:"2026 photography / visual storytelling",meta:"2026 · photography",body:"<p><strong>Brief / Scope</strong>A collection of photographs taken and edited over several years, brought together around the details, people and places that catch my attention.</p><p><strong>Approach</strong>I love playing with symmetry, asymmetry and finding lines that guide your eye somewhere unexpected.</p><p><strong>Insight</strong>The photographs reflect the way I naturally observe the world, and continue to inform how I research, find visual stories and approach creative direction.</p>",note:"",imgs:["photo01.jpg","photo02.jpg","photo03.jpg","photo04.jpg","photo05.jpg","photo06.jpg","photo07.jpg","photo08.jpg","photo09.jpg","photo10.jpg","photo11.jpg","photo12.jpg"]},
 ];
